@@ -137,62 +137,68 @@
             </div>
             <!-- end of search box -->
             <!-- store items -->
-            <div class="container">
+            <div class="container" id="store-items">
                 
                 <div class="products-container">
 
                     <div class="product" data-name="p-1">
                         <img src="assets\img\products1.png" alt="">
-                        <h3>Product 1</h3>
-                        <div class="price">$2</div>
-                        <span class="store-item-icon">
-                            <i class="fas fa-shopping-cart"></i>
-                        </span>
+                        <div class="card-body">
+                            <div class="card-text d-flex justify-content-between text-capitalize">
+                              <h3 id="store-item-name">Product 1</h3>
+                              <div class="price">$2</div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="product" data-name="p-2">
                         <img src="assets\img\products2.png" alt="">
-                        <h3>Product 2</h3>
-                        <div class="price">$5</div>
-                        <span class="store-item-icon">
-                            <i class="fas fa-shopping-cart"></i>
-                        </span>
+                        <div class="card-body">
+                            <div class="card-text d-flex justify-content-between text-capitalize">
+                              <h3 id="store-item-name">Product 2</h3>
+                              <div class="price">$5</div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="product" data-name="p-3">
                         <img src="assets\img\products4.png" alt="">
-                        <h3>Product 3</h3>
-                        <div class="price">$15</div>
-                        <span class="store-item-icon">
-                            <i class="fas fa-shopping-cart"></i>
-                        </span>
+                        <div class="card-body">
+                            <div class="card-text d-flex justify-content-between text-capitalize">
+                              <h3 id="store-item-name">Product 3</h3>
+                              <div class="price">$15</div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="product" data-name="p-4">
                         <img src="assets\img\products5.png" alt="">
-                        <h3>Product 4</h3>
-                        <div class="price">$2</div>
-                        <span class="store-item-icon">
-                            <i class="fas fa-shopping-cart"></i>
-                        </span>
+                        <div class="card-body">
+                            <div class="card-text d-flex justify-content-between text-capitalize">
+                              <h3 id="store-item-name">Product 4</h3>
+                              <div class="price">$2</div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="product" data-name="p-5">
                         <img src="assets\img\products6.png" alt="">
-                        <h3>Product 5</h3>
-                        <div class="price">$2</div>
-                        <span class="store-item-icon">
-                            <i class="fas fa-shopping-cart"></i>
-                        </span>
+                        <div class="card-body">
+                            <div class="card-text d-flex justify-content-between text-capitalize">
+                              <h3 id="store-item-name">Product 5</h3>
+                              <div class="price">$15</div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="product" data-name="p-6">
                         <img src="assets\img\Sofa.png" alt="">
-                        <h3>Product 6</h3>
-                        <div class="price">$5</div>
-                        <span class="store-item-icon">
-                            <i class="fas fa-shopping-cart"></i>
-                        </span>
+                        <div class="card-body">
+                            <div class="card-text d-flex justify-content-between text-capitalize">
+                              <h3 id="store-item-name">Product 6</h3>
+                              <div class="price">$10</div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -203,7 +209,12 @@
 
                 <div class="preview" data-target="p-1">
                     <i class="fas fa-times"></i>
-                    <img src="assets\img\products1.png" alt="">
+                    <div class="img-container">
+                        <img src="assets\img\products1.png" class="store-img" alt="">
+                        <span class="store-item-icon">
+                          <i class="fas fa-shopping-cart"></i>
+                        </span>
+                    </div>
                     <h3>Some type of furniture</h3>
                     <div class="stars">
                        <i class="fas fa-star"></i>
@@ -223,7 +234,12 @@
 
                 <div class="preview" data-target="p-2">
                     <i class="fas fa-times"></i>
-                    <img src="assets\img\products2.png" alt="">
+                    <div class="img-container">
+                        <img src="assets\img\products2.png" class="store-img" alt="">
+                        <span class="store-item-icon">
+                          <i class="fas fa-shopping-cart"></i>
+                        </span>
+                    </div>
                     <h3>Some type of furniture</h3>
                     <div class="stars">
                        <i class="fas fa-star"></i>
@@ -243,7 +259,12 @@
 
                 <div class="preview" data-target="p-3">
                     <i class="fas fa-times"></i>
-                    <img src="assets\img\products4.png" alt="">
+                    <div class="img-container">
+                        <img src="assets\img\products4.png" class="store-img" alt="">
+                        <span class="store-item-icon">
+                          <i class="fas fa-shopping-cart"></i>
+                        </span>
+                    </div>
                     <h3>Some type of furniture</h3>
                     <div class="stars">
                        <i class="fas fa-star"></i>
@@ -263,7 +284,12 @@
 
                 <div class="preview" data-target="p-4">
                     <i class="fas fa-times"></i>
-                    <img src="assets\img\products5.png" alt="">
+                    <div class="img-container">
+                        <img src="assets\img\products5.png" class="store-img" alt="">
+                        <span class="store-item-icon">
+                          <i class="fas fa-shopping-cart"></i>
+                        </span>
+                    </div>
                     <h3>Some type of furniture</h3>
                     <div class="stars">
                        <i class="fas fa-star"></i>
@@ -283,7 +309,12 @@
 
                 <div class="preview" data-target="p-5">
                     <i class="fas fa-times"></i>
-                    <img src="assets\img\products6.png" alt="">
+                    <div class="img-container">
+                        <img src="assets\img\products6.png" class="store-img" alt="">
+                        <span class="store-item-icon">
+                          <i class="fas fa-shopping-cart"></i>
+                        </span>
+                    </div>
                     <h3>Some type of furniture</h3>
                     <div class="stars">
                        <i class="fas fa-star"></i>
@@ -303,7 +334,12 @@
 
                 <div class="preview" data-target="p-6">
                     <i class="fas fa-times"></i>
-                    <img src="assets\img\Sofa.png" alt="">
+                    <div class="img-container">
+                        <img src="assets\img\Sofa.png" class="store-img" alt="">
+                        <span class="store-item-icon">
+                          <i class="fas fa-shopping-cart"></i>
+                        </span>
+                    </div>
                     <h3>Some type of furniture</h3>
                     <div class="stars">
                        <i class="fas fa-star"></i>
