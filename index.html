@@ -20,7 +20,7 @@
         <!-- navbar -->
         <nav class="navbar navbar-expand-lg px-4">
             <a class="navbar-brand" href="index.html">
-                <img src="assets\logo.svg" alt="logo">
+                <img src="assets\shop_logo.png" alt="logo" width="40px">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNav">
                 <span class="toggler-icon"><i class="fas fa-bars"></i></span>
@@ -104,8 +104,136 @@
                 <a href="products.html" style="text-decoration: none;" class="text-capitalize"><strong class="banner-title ">our products</strong></a>
             </div>
         </div>
+        <div class="container" id="store-items">
+                
+            <div class="products-container">
+
+                <div class="product store-item chairs" data-name="p-1" data-item="chairs">
+                    <img src="assets\img\chairs\Sofa.png" alt="">
+                    <div class="card-body">
+                        <div class="card-text d-flex justify-content-between text-capitalize">
+                          <h3 id="store-item-name">Product 1</h3>
+                          <div class="price">$2</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product store-item shelves" data-name="p-2" data-item="shelves">
+                    <img src="assets\img\shelves\shelve2.png" alt="">
+                    <div class="card-body">
+                        <div class="card-text d-flex justify-content-between text-capitalize">
+                          <h3 id="store-item-name">Product 2</h3>
+                          <div class="price">$10</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product store-item plants" data-name="p-3" data-item="plants">
+                    <div class="img-container"><img src="assets\img\plants\egor-myznik-unsplash.jpg" alt=""></div>
+                    <div class="card-body">
+                        <div class="card-text d-flex justify-content-between text-capitalize">
+                          <h3 id="store-item-name">Product 3</h3>
+                          <div class="price">$5</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- see more products button-->
+        <div class="row">
+            <div class="col-10 mx-auto col-sm-6 text-center">
+                <a href="products.html" class="btn btn-outline-secondary btn-black text-uppercase ">see more</a>
+            </div>
+        </div>
+
     </section>
     <!-- end of store section -->
+
+    <!-- preview products in popup -->
+    <div class="products-preview">
+
+        <div class="preview" data-target="p-1">
+            <br>
+            <i class="fas fa-times"></i>
+            <div class="img-container">
+                <img src="assets\img\chairs\Sofa.png" class="store-img" alt="">
+                <span class="store-item-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </span>
+            </div>
+            <br>
+            <h3>Some type of furniture</h3>
+            <div class="stars">
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star-half-alt"></i>
+               <span>( 250 )</span>
+            </div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, dolorem.</p>
+            <div class="price">$2.00</div>
+            <div class="buttons">
+                <a href="#" class="btn btn-outline-secondary btn-black text-uppercase buy">buy now</a>
+                <a href="#" class="btn btn-outline-secondary btn-black text-uppercase enterAR">View in Room</a>
+            </div>
+        </div>
+
+        <div class="preview" data-target="p-2">
+            <i class="fas fa-times"></i>
+            <br>
+            <div class="img-container">
+                <img src="assets\img\shelves\shelve2.png" class="store-img" alt="">
+                <span class="store-item-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </span>
+            </div>
+            <br>
+            <h3>Some type of furniture</h3>
+            <div class="stars">
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star-half-alt"></i>
+               <span>( 250 )</span>
+            </div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, dolorem.</p>
+            <div class="price">$2.00</div>
+            <div class="buttons">
+                <a href="#" class="btn btn-outline-secondary btn-black text-uppercase buy">buy now</a>
+                <a href="#" class="btn btn-outline-secondary btn-black text-uppercase enterAR">View in Room</a>
+            </div>
+        </div>
+
+        <div class="preview" data-target="p-3">
+            <i class="fas fa-times"></i>
+            <br>
+            <br>
+            <div class="img-container">
+                <img src="assets\img\plants\egor-myznik-unsplash.jpg" class="store-img" alt="">
+                <span class="store-item-icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </span>
+            </div>
+            <br>
+            <h3>Some type of plant</h3>
+            <div class="stars">
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star"></i>
+               <i class="fas fa-star-half-alt"></i>
+               <span>( 250 )</span>
+            </div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, dolorem.</p>
+            <div class="price">$2.00</div>
+            <div class="buttons">
+                <a href="#" class="btn btn-outline-secondary btn-black text-uppercase buy">buy now</a>
+                <a href="#" class="btn btn-outline-secondary btn-black text-uppercase enterAR">View in Room</a>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="modal-footer">
