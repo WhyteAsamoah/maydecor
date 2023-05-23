@@ -328,6 +328,16 @@ body {
   font-size: 2rem;
   color:#444;
 }
+.error-page{
+  min-height: 100vh;
+  display: block;
+  align-items: center;
+  justify-content: center;
+}
+.error-container{
+  text-align: center;
+  padding:3rem 2rem;
+}
 
 .products-preview{
   position: fixed;
