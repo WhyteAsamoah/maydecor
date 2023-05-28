@@ -411,56 +411,6 @@ body {
 
 /* end of lightbox */
 
-.login-logout-popup{
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 10px;
-  background: #fff;
-  border-radius: 10px;
-  top: 40px;
-  width: 200px;
-  transition: .5s;
-  border: 2px solid #f5fff5;
-}
-
-.login-logout-popup::after{
-  content: '';
-  position: absolute;
-  top: -7.5px;
-  left: 50%;
-  transform: translateX(-50%) rotate(45deg);
-  width: 15px;
-  height: 15px;
-  background: #fff;
-  border-radius: 5px;
-}
-
-.account-info{
-  font-size: 20px;
-  text-transform: capitalize;
-}
-
-#user-btn{
-  padding: 10px;
-  background: #383838;
-  color: #fff;
-  outline: none;
-  width: 100%;
-  border-radius: 5px;
-  border: none;
-  margin-top: 20px;
-  font-size: 15px;
-  text-transform: capitalize;
-  cursor: pointer;
-}
-
-.hide{
-  opacity: 0;
-  pointer-events: none;
-}
-
-
 /* media queries */
 
 @media (max-width:991px){

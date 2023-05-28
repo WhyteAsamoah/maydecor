@@ -11,9 +11,9 @@ const createNav = () => {
                     <button class="search-btn">search</button>
                 </div>
                 <a>
-                    <img src="assets/user.png" alt="">
+                    <img src="assets/user.png" id="user-img" alt="">
                     <div class="login-logout-popup hide">
-                        <p class="account-info">Logged in</p>
+                        <p class="account-info">Logged in as, name</p>
                         <button class="btn" id="user-btn">Logout</button>
                     </div>
                 </a>
@@ -30,3 +30,34 @@ const createNav = () => {
 }
 
 createNav();
+
+// nav popup
+const userImageButton = document.querySelector('#user-img');
+const userPop = document.querySelector('.login-logout-popup');
+const popuptext = document.querySelector('.account-info');
+const actionBtn = document.querySelector('#user-btn');
+
+userImageButton.addEventListener('click', () => {
+    userPop.classList.toggle('hide');
+})
+
+window.onload = () => {
+    let user = JSON.parse(sessionStorage.user || null);
+    if (user != null) {
+        // user is logged in
+        popuptext.innerHTML = `Logged in as ${user.name}`;
+        actionBtn.innerHTML = 'Logout';
+        actionBtn.addEventListener('click', () => {
+            sessionStorage.clear();
+            location.reload();
+        })
+
+    } else {
+        // user is not logged in
+        popuptext.innerHTML = 'You are not logged in';
+        actionBtn.innerHTML = 'Login';
+        actionBtn.addEventListener('click', () => {
+            location.href = '/login';
+        })
+    }
+}
