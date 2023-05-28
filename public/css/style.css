@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600&display=swap');
+@import 'nav.css';
+@import 'footer.css';
 
 :root {
   --mainPink: #ef7998;
@@ -20,94 +22,13 @@
 }
 
 html{
-  font-size: 67%;
+  font-size: 62.5%;
   overflow-x: hidden;
 }
 
 body {
   background: var(--mainWhite);
   color: var(--mainBlack);
-}
-/*nav1*/
-.navbar1{
-  position: sticky;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: #f5f5f5;
-  z-index: 9;
-}
-
-.nav1{
-  padding: 10px 10vw;
-  display: flex;
-  justify-content: space-between;
-}
-
-.brand-logo{
-  height: 60px;
-}
-
-.nav-items{
-  display: flex;
-  align-items: center;
-}
-
-.search{
-  width: 500px;
-  display: flex;
-}
-
-.search-box1{
-  width: 80%;
-  height: 40px;
-  padding: 10px;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border: 1px solid #d1d1d1;
-  text-transform: capitalize;
-  background: none;
-  color: #a9a9a9;
-  outline: none;
-}
-
-.search-btn{
-  width: 20%;
-  height: 40px;
-  padding: 10px 20px;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  background: #383838;
-  color: #fff;
-  text-transform: capitalize;
-  font-size: 15px;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-
-.search-box1::placeholder{
-  color: #a9a9a9;
-}
-
-.nav-items a{
-  margin-left: 20px;
-  position: relative;
-}
-
-.nav-items a img{
-  width: 30px;
-  cursor: pointer;
-}
-
-/* nav links */
-.nav-link-container{
-  width: 100%;
-  display: flex;
-  padding: 10px 10vw;
-  justify-content: center;
-  list-style: none;
-  border-top: 1px solid #d1d1d1;
 }
 
 .navbar-toggler {
@@ -117,15 +38,7 @@ body {
   font-size: 2.5rem;
   color: var(--mainPink);
 }
-.nav-link {
-  color: var(--mainPink);
-  font-size: 1.5rem;
-  transition: all 0.5s ease-in-out;
-}
-.nav-link:hover {
-  color: var(--mainBlack);
-}
-/* end of nav links */
+
 /* info icons */
 .cart-info__icon {
   color: var(--mainBlack);
@@ -150,28 +63,23 @@ body {
 /* end of info icons */
 /* banner */
 
-.max-height {
-  min-height: calc(100vh - 76px);
+.hero-section {
+  height: calc(100vh - 120px);
   background: linear-gradient(var(--yellowTrans), var(--yellowTrans)),
-    url("../assets/room-3-virender-singh-unsplash.jpg") center/cover fixed no-repeat;
-  position: relative;
+    url("../assets/room-3-virender-singh-unsplash.jpg") center fixed no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .banner {
   color: var(--mainWhite);
   margin-top: -4rem;
+  
 }
 .banner-title {
   color: var(--mainPink);
   font-size: 4rem;
-}
-.banner-link {
-  font-size: 1.5rem;
-  color: var(--mainBlack);
-  border: 0.2rem solid var(--mainBlack);
-}
-.banner-link:hover {
-  background: var(--mainBlack);
-  color: var(--mainPink);
 }
 /* endo of banner */
 /* cart  */
@@ -353,6 +261,7 @@ body {
 .products-preview{
   position: fixed;
   top:0; left:0;
+  z-index: 10;
   min-height: 100vh;
   width: 100%;
   background: rgba(0,0,0,.8);
