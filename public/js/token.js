@@ -48,6 +48,13 @@ const processData = (data) => {
         sessionStorage.user = JSON.stringify(data);
         // redirect to home page
         location.replace('/');
+    } else if(data == true){
+        // seller page
+        let user = JSON.parse(sessionStorage.user);
+        user.seller = true;
+        sessionStorage.user = JSON.stringify(user);
+        location.reload();
+
     }
 }
 

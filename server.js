@@ -111,6 +111,30 @@ app.post('/login', (req, res) => {
     })
 })
 
+// seller dashboard route
+app.get('/seller', (req, res) => {
+    res.sendFile(path.join(staticPath, "seller.html"));
+})
+
+app.post('/seller', (req, res) => {
+    let {name, about, address, number, tac, legit, email} = req.body;
+    if(!name.length || !about.length || !address.length || number.length < 10 || !Number(number)) {
+        return res.json({'alert': 'Some feilds are empty or invalid'});
+    } else if(!tac || !legit) {
+        return res.json({'alert': 'Please accept terms and conditions'});
+    } else {
+        // update seller's status
+        db.collection('sellers').doc(email).set(req.body)
+        .then(data => {
+            db.collection('users').doc(email).update({
+                seller: true
+            }).then(data => {
+                res.json(true);
+            })
+        })
+    }
+})
+
 // 404 route
 app.get('/404', (req, res) => {
     res.sendFile(path.join(staticPath, "404.html"));
