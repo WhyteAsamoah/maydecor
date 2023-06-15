@@ -33,6 +33,32 @@ sellingPrice.addEventListener('input', () => {
 })
 
 // upload image handler
-let uploadImages = document.querySelectorAll('.fileupload');
-let imagePaths = []; // will store all upload images paths;
+const fileInputs = document.querySelectorAll('.fileupload');
+const imagePaths = []; // array to store image paths
+
+fileInputs.forEach((fileInput, index) => {
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+
+        if (file.type.includes('image')) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/imgurl', {
+                method: 'POST',
+                body: formData,
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    const { url } = data;
+                    const imageUrl = url.split('?')[0];
+                    imagePaths[index] = imageUrl;
+                    console.log(imageUrl);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    });
+});
 

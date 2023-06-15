@@ -3,15 +3,30 @@ const express = require('express');
 const admin = require('firebase-admin');
 const bcrypt = require('bcrypt');
 const path = require('path');
+const multer = require('multer');
+const {Storage} = require('@google-cloud/storage');
 
 // firebase admin setup
 let serviceAccount = require("./maydecor-89f84-firebase-adminsdk-bjvyw-9cf8daa04f.json");
 
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://maydecor-89f84-default-rtdb.firebaseio.com"
 });
 
 let db = admin.firestore();
+
+// firebase storage setup
+const storage = new Storage({
+    projectId: 'maydecor-89f84',
+    credentials: {
+        client_email: serviceAccount.client_email,
+        private_key: serviceAccount.private_key.replace(/\\n/g, '\n')
+    }
+});
+
+const bucket = storage.bucket('gs://maydecor-89f84.appspot.com');
+
 
 
 //declare static path
@@ -23,6 +38,14 @@ const app = express();
 //middlewares
 app.use(express.static(staticPath));
 app.use(express.json());
+
+// configure multer for file uploads
+const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: {
+        fileSize: 5 * 1024 * 1024 // no larger than 5mb
+    }
+});
 
 //routes
 //home route
@@ -139,6 +162,46 @@ app.post('/seller', (req, res) => {
 app.get('/add-product', (req, res) => {
     res.sendFile(path.join(staticPath, "add-product.html"));
 })
+
+//handle image upload
+
+// Handle the /imgurl endpoint
+app.post('/imgurl', upload.single('file'), (req, res) => {
+    // Access the uploaded file from the request object
+    const file = req.file;
+
+    // Generate a unique filename for the uploaded file
+    const fileName = Date.now() + '-' + file.originalname;
+
+    // Create a file reference in the Firebase storage bucket
+    const fileRef = bucket.file(fileName);
+
+    // Create a write stream to upload the file
+    const uploadStream = fileRef.createWriteStream({
+        metadata: {
+            contentType: file.mimetype,
+        },
+    });
+
+    // Handle errors during the upload process
+    uploadStream.on('error', (error) => {
+        console.log(error);
+        res.status(500).json({ error: 'Error uploading file' });
+    });
+
+    // Handle the finish event
+    uploadStream.on('finish', () => {
+        // Get the public URL of the uploaded file
+        const publicUrl = `https://storage.googleapis.com/${bucket.name}/${fileRef.name}`;
+
+        // Send the public URL as a response
+        res.status(200).json({ url: publicUrl });
+    });
+
+    // Pipe the file to the upload stream
+    uploadStream.end(file.buffer);
+});
+
 
 // 404 route
 app.get('/404', (req, res) => {
