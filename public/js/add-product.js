@@ -36,9 +36,9 @@ sellingPrice.addEventListener('input', () => {
 const fileInputs = document.querySelectorAll('.fileupload');
 const imagePaths = []; // array to store image paths
 
-fileInputs.forEach((fileInput, index) => {
-    fileInput.addEventListener('change', () => {
-        const file = fileInput.files[0];
+fileInputs.forEach((fileupload, index) => {
+    fileupload.addEventListener('change', () => {
+        const file = fileupload.files[0];
 
         if (file.type.includes('image')) {
             const formData = new FormData();
