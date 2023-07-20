@@ -1,10 +1,14 @@
 // importing packages
+const functions = require('firebase-functions');
+const {Storage} = require('@google-cloud/storage');
+const UUID = require('uuid-v4');
 const express = require('express');
+const formidable = require("formidable-serverless");
 const admin = require('firebase-admin');
 const bcrypt = require('bcrypt');
 const path = require('path');
 const multer = require('multer');
-const {Storage} = require('@google-cloud/storage');
+
 
 // firebase admin setup
 let serviceAccount = require("./maydecor-89f84-firebase-adminsdk-bjvyw-9cf8daa04f.json");
@@ -16,17 +20,12 @@ admin.initializeApp({
 
 let db = admin.firestore();
 
+const userRef = db.collection('sellers');
+
 // firebase storage setup
 const storage = new Storage({
-    projectId: 'maydecor-89f84',
-    credentials: {
-        client_email: serviceAccount.client_email,
-        private_key: serviceAccount.private_key.replace(/\\n/g, '\n')
-    }
+    keyFilename: './maydecor-89f84-firebase-adminsdk-bjvyw-9cf8daa04f.json',
 });
-
-const bucket = storage.bucket('gs://maydecor-89f84.appspot.com');
-
 
 
 //declare static path
@@ -39,13 +38,13 @@ const app = express();
 app.use(express.static(staticPath));
 app.use(express.json());
 
-// configure multer for file uploads
+/* // configure multer for file uploads
 const upload = multer({
     storage: multer.memoryStorage(),
     limits: {
         fileSize: 5 * 1024 * 1024 // no larger than 5mb
     }
-});
+}); */
 
 //routes
 //home route
@@ -164,44 +163,77 @@ app.get('/add-product', (req, res) => {
 })
 
 //handle image upload
+app.post('/imgurl', (req, res) => {
+    const form = formidable();
 
-// Handle the /imgurl endpoint
-app.post('/imgurl', upload.single('file'), (req, res) => {
-    // Access the uploaded file from the request object
-    const file = req.file;
+    form.parse(req, async (err, fields, files) => {
+        if (err) {
+          return res.status(400).json({
+            message: 'There was an error parsing the files',
+            data: {},
+            error: err,
+          });
+        }
 
-    // Generate a unique filename for the uploaded file
-    const fileName = Date.now() + '-' + file.originalname;
+        const uploadImage = files.uploadImage;
 
-    // Create a file reference in the Firebase storage bucket
-    const fileRef = bucket.file(fileName);
+        if (!uploadImage || uploadImage.size === 0) {
+            return res.status(400).json({
+                message: 'No image file provided',
+                data: {},
+                error: err,
+            });
+        }
 
-    // Create a write stream to upload the file
-    const uploadStream = fileRef.createWriteStream({
-        metadata: {
-            contentType: file.mimetype,
-        },
+        const bucket = storage.bucket('gs://maydecor-89f84.appspot.com');
+        const uuid = UUID();
+
+        try {
+            const imageResponse = await bucket.upload(uploadImage.path, {
+                destination: `sellers/${uploadImage.name}`,
+                resumable: true,
+                metadata: {
+                    metadata: {
+                        firebaseStorageDownloadTokens: uuid,
+                    },
+                },
+            });
+
+            const imageUrl = 'https://firebasestorage.googleapis.com/' + bucket.name + '/' + encodeURIComponent(imageResponse[0].name) + '?alt=media&token=' + uuid;
+
+            return res.status(200).json({url: imageUrl});
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({error: 'Error uploading file' });
+        }
     });
-
-    // Handle errors during the upload process
-    uploadStream.on('error', (error) => {
-        console.log(error);
-        res.status(500).json({ error: 'Error uploading file' });
-    });
-
-    // Handle the finish event
-    uploadStream.on('finish', () => {
-        // Get the public URL of the uploaded file
-        const publicUrl = `https://storage.googleapis.com/${bucket.name}/${fileRef.name}`;
-
-        // Send the public URL as a response
-        res.status(200).json({ url: publicUrl });
-    });
-
-    // Pipe the file to the upload stream
-    uploadStream.end(file.buffer);
 });
 
+// add product to database
+app.post('/add-product', (req, res) => {
+    let { name, shortDes, des, images, sizes, actualPrice, discount, sellPrice, stock, tags, tac, email } = req.body;
+
+    // form validation
+    if (!productName.value.length) {
+        return showAlert('Product name is required');
+    } else if (!shortLine.value.length > 100 || shortLine.value.length < 10) {
+        return showAlert('Short description should be between 10 to 100 characters');
+    } else if (!des.value.length) {
+        return showAlert('Description is required');
+    } else if(!imagePaths.length){ // imagePaths is an array
+        return showAlert('Please upload atleast one image');
+    } else if (!sizes.length) { // sizes is an array
+        return showAlert('Please select atleast one size');
+    } else if (!actualPrice.value.length || !discount.value.length || !sellingPrice.value.length) {
+        return showAlert('Please enter price details');
+    } else if (stock.value < 20) {
+        return showAlert('You should have atleast 20 items in stock');
+    } else if (!tags.value.length) {
+        return showAlert('Please enter atleast one tag');
+    } else if (!tac.checked) {
+        return showAlert('Please accept terms and conditions');
+    }
+})
 
 // 404 route
 app.get('/404', (req, res) => {
