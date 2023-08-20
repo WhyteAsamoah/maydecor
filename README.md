@@ -19,7 +19,7 @@ This AR web app has the potential to revolutionize the way people shop for inter
 
 Clone the repository
 
-`git clone https://github.com/your-username/your-project.git`
+`git clone https://github.com/WhyteAsamoah/maydecor.git`
 
 Navigate to the project folder
 
