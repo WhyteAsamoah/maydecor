@@ -13,7 +13,7 @@ This AR web app has the potential to revolutionize the way people shop for inter
 6. [Author](#author)
 7. [Acknowledgements](#acknowledgements)
 
-### Installation
+### 1. Installation
 
 <a name="installation"></a>
 
@@ -29,7 +29,7 @@ Install dependencies
 
 `npm install`
 
-### Usage
+### 2. Usage
 
 <a name="usage"></a>
 
@@ -39,7 +39,7 @@ To run the project:
 
 visit http://localhost:3000 in your browser.
 
-### Technologies Used
+### 3. Technologies Used
 
 <a name="technologies-used"></a>
 
@@ -64,27 +64,28 @@ Here are the technologies and tools used to build this project:
   - VS Code as the code editor
   - Blender for 3D modelling
 
-### Contributing
+### 4. Contributing
 
 <a name="contribution"></a>
 
 Feel free to open an issue or submit a pull request.
 
-### License
+### 5. License
 
 <a name="license"></a>
 
 The License under which the project is distributed will be specified later.
 
-### Author
+### 6. Author
 
 <a name="author"></a>
 
 Martha Asamoah Yeboah -
 [@WhyteAsamoah](https://github.com/WhyteAsamoah)
+
 abenaasamoah138@gmail.com
 
-### Acknowledgements
+### 7. Acknowledgements
 
 <a name="acknowledgements"></a>
 
