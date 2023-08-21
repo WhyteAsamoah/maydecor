@@ -48,7 +48,7 @@ textarea{
 }
 
 .text{
-    text-transform: capitalize;
+    text-transform: none;
     color: #383838;
     font-size: 20px;
     font-weight: 500;
@@ -142,7 +142,7 @@ input::-webkit-inner-spin-button {
 
 .btn{
     padding: 10px 30px;
-    text-transform: capitalize;
+    text-transform: none;
     color: #fff;
     background: #383838;
     border-radius: 5px;

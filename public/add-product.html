@@ -1,25 +1,26 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- signup css -->
-    <link rel="stylesheet" href="css/signup.css">
+    <link rel="stylesheet" href="../css/signup.css">
     <!-- seller css -->
-    <link rel="stylesheet" href="css/add-product.css">
+    <link rel="stylesheet" href="../css/add-product.css">
     <title>MayDecor : Add Product(s)</title>
 </head>
+
 <body>
 
-    <img src="assets/loader.gif" class="loader" alt="">
+    <img src="../assets/loader.gif" class="loader" alt="">
 
     <div class="alert-box">
-        <img src="assets/error.png" class="alert-img" alt="">
+        <img src="../assets/error.png" class="alert-img" alt="">
         <p class="alert-msg">Error message</p>
     </div>
-    
-    <img src="assets/LogoMakr.png" alt="logo" class="logo">
+
+    <img src="../assets/LogoMakr.png" alt="logo" class="logo">
 
     <div class="form">
         <input type="text" id="product-name" placeholder="Product name">
@@ -33,24 +34,24 @@
             </div>
             <div class="upload-image-sec">
                 <!-- upload inputs -->
-                <p class="text"><img src="assets/camera.png" alt="">upload image</p>
+                <p class="text"><img src="../assets/camera.png" alt="">upload image</p>
                 <div class="upload-catalouge">
                     <!-- first file upload -->
                     <input type="file" class="fileupload" id="first-file-upload-btn" hidden>
                     <label for="first-file-upload-btn" class="upload-image"></label>
-        
+
                     <!-- second file upload -->
                     <input type="file" class="fileupload" id="second-file-upload-btn" hidden>
                     <label for="second-file-upload-btn" class="upload-image"></label>
-        
+
                     <!-- third file upload -->
                     <input type="file" class="fileupload" id="third-file-upload-btn" hidden>
                     <label for="third-file-upload-btn" class="upload-image"></label>
-        
-                    <!-- second file upload -->
-                    <input type="file" class="fileupload" id="second-file-upload-btn" hidden>
-                    <label for="second-file-upload-btn" class="upload-image"></label>
-        
+
+                    <!-- fourth file upload -->
+                    <input type="file" class="fileupload" id="fourth-file-upload-btn" hidden>
+                    <label for="fourth-file-upload-btn" class="upload-image"></label>
+
                 </div>
             </div>
             <div class="select-sizes">
@@ -73,7 +74,7 @@
             <input type="number" id="sell-price" placeholder="selling price">
         </div>
 
-        <input type="number" id="quantity" min="20" placeholder="quantity available (minimum 20)">
+        <input type="number" id="stock" min="10" placeholder="item in stock (minimum 10)">
 
         <textarea id="tags" placeholder="Enter category here, for example - Chairs, armchair, colorful armchair 
         (You should add 'chairs', 'desks', 'lamps', 'plants', 'shelves', or 'wallprints' at the beginning)"></textarea>
@@ -87,8 +88,9 @@
         </div>
     </div>
 
-    <script src="js/token.js"></script>
-    <script src="js/add-product.js"></script>
+    <script src="../js/token.js"></script>
+    <script src="../js/add-product.js"></script>
 
 </body>
+
 </html>

@@ -32,7 +32,7 @@ footer{
 
 .category-title{
     grid-column: span 2;
-    text-transform: capitalize;
+    text-transform: none;
     color: #fff;
     font-size: 20px;
     margin-bottom: 20px;
@@ -40,7 +40,7 @@ footer{
 
 .category .footer-link{
     text-decoration: none;
-    text-transform: capitalize;
+    text-transform: none;
     color: rgb(255, 255, 255, 0.75);
 }
 
@@ -51,7 +51,7 @@ footer{
 .footer-title, .info{
     color: rgba(255, 255, 255, 0.75);
     margin: 20px 0;
-    text-transform: capitalize;
+    text-transform: none;
 }
 
 .footer-title{
@@ -68,7 +68,7 @@ footer{
 .social-link{
     color: #fff;
     margin-left: 20px;
-    text-transform: capitalize;
+    text-transform: none;
 }
  .social-link img{
     width: 30px;

@@ -1,17 +1,34 @@
 // importing packages
-const functions = require('firebase-functions');
 const {Storage} = require('@google-cloud/storage');
-const UUID = require('uuid-v4');
+const {v4: uuidv4} = require('uuid');
 const express = require('express');
-const formidable = require("formidable-serverless");
-const admin = require('firebase-admin');
+const formidable = require("formidable");
 const bcrypt = require('bcrypt');
 const path = require('path');
-const multer = require('multer');
+const cors = require('cors');
 
+//declare static path
+let staticPath = path.join(__dirname, 'public');
+// initializing express.js
+const app = express();
+//middlewares
+app.use(cors());
+app.use(express.static(staticPath));
+app.use(express.json({limit: '50mb', extended: true})); // parse json data
+app.use(express.urlencoded({limit: '50mb', extended: false})); // parse urlencoded data
+
+const corsOptions = {
+    origin: 'http://localhost:3000', 'https://maydecor-89f84.web.app': 'https://maydecor-89f84.firebaseapp.com',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type,Authorization'
+};
+
+app.use(cors(corsOptions));
 
 // firebase admin setup
-let serviceAccount = require("./maydecor-89f84-firebase-adminsdk-bjvyw-9cf8daa04f.json");
+var admin = require('firebase-admin');
+
+var serviceAccount = require("./maydecor-89f84-firebase-adminsdk-bjvyw-9cf8daa04f.json");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -24,27 +41,10 @@ const userRef = db.collection('sellers');
 
 // firebase storage setup
 const storage = new Storage({
+    projectId: 'maydecor-89f84',
     keyFilename: './maydecor-89f84-firebase-adminsdk-bjvyw-9cf8daa04f.json',
+    bucket: 'gs://maydecor-89f84.appspot.com'
 });
-
-
-//declare static path
-let staticPath = path.join(__dirname, 'public');
-
-// initializing express.js
-const app = express();
-
-//middlewares
-app.use(express.static(staticPath));
-app.use(express.json());
-
-/* // configure multer for file uploads
-const upload = multer({
-    storage: multer.memoryStorage(),
-    limits: {
-        fileSize: 5 * 1024 * 1024 // no larger than 5mb
-    }
-}); */
 
 //routes
 //home route
@@ -162,77 +162,84 @@ app.get('/add-product', (req, res) => {
     res.sendFile(path.join(staticPath, "add-product.html"));
 })
 
-//handle image upload
-app.post('/imgurl', (req, res) => {
-    const form = formidable();
+app.get('/add-product/:id', (req, res) => {
+    res.sendFile(path.join(staticPath, "add-product.html"));
+})
 
-    form.parse(req, async (err, fields, files) => {
-        if (err) {
-          return res.status(400).json({
-            message: 'There was an error parsing the files',
-            data: {},
-            error: err,
-          });
-        }
-
-        const uploadImage = files.uploadImage;
-
-        if (!uploadImage || uploadImage.size === 0) {
-            return res.status(400).json({
-                message: 'No image file provided',
-                data: {},
-                error: err,
-            });
-        }
-
-        const bucket = storage.bucket('gs://maydecor-89f84.appspot.com');
-        const uuid = UUID();
-
-        try {
-            const imageResponse = await bucket.upload(uploadImage.path, {
-                destination: `sellers/${uploadImage.name}`,
-                resumable: true,
-                metadata: {
-                    metadata: {
-                        firebaseStorageDownloadTokens: uuid,
-                    },
-                },
-            });
-
-            const imageUrl = 'https://firebasestorage.googleapis.com/' + bucket.name + '/' + encodeURIComponent(imageResponse[0].name) + '?alt=media&token=' + uuid;
-
-            return res.status(200).json({url: imageUrl});
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json({error: 'Error uploading file' });
-        }
-    });
-});
+// image upload route
 
 // add product to database
 app.post('/add-product', (req, res) => {
-    let { name, shortDes, des, images, sizes, actualPrice, discount, sellPrice, stock, tags, tac, email } = req.body;
+    let { name, shortDes, des, sizes, actualPrice, discount, sellPrice, stock, tags, tac, email, draft, id } = req.body;
 
     // form validation
-    if (!productName.value.length) {
-        return showAlert('Product name is required');
-    } else if (!shortLine.value.length > 100 || shortLine.value.length < 10) {
-        return showAlert('Short description should be between 10 to 100 characters');
-    } else if (!des.value.length) {
-        return showAlert('Description is required');
-    } else if(!imagePaths.length){ // imagePaths is an array
-        return showAlert('Please upload atleast one image');
-    } else if (!sizes.length) { // sizes is an array
-        return showAlert('Please select atleast one size');
-    } else if (!actualPrice.value.length || !discount.value.length || !sellingPrice.value.length) {
-        return showAlert('Please enter price details');
-    } else if (stock.value < 20) {
-        return showAlert('You should have atleast 20 items in stock');
-    } else if (!tags.value.length) {
-        return showAlert('Please enter atleast one tag');
-    } else if (!tac.checked) {
-        return showAlert('Please accept terms and conditions');
+    if(!draft){
+        if (!name.length) {
+            return res.json({'alert': 'Product name is required'});
+        } else if (shortDes.length > 100 || shortDes.length < 10) {
+            return res.json({'alert':'Short description should be between 10 to 100 characters'});
+        } else if (!des.length) {
+            return res.json({'alert':'Description is required'});
+        } /* else if(!images.length){ // imagePaths is an array
+            return res.json({'alert':'Please upload atleast one image'});
+        } */ 
+        else if (!sizes.length) { // sizes is an array
+            return res.json({'alert':'Please select atleast one size'});
+        } else if (!actualPrice.length || !discount.length || !sellPrice.length) {
+            return res.json({'alert':'Please enter price details'});
+        } else if (stock < 10) {
+            return res.json({'alert':'You should have atleast 10 items in stock'});
+        } else if (!tags.length) {
+            return res.json({'alert':'Please enter atleast one tag'});
+        } else if (!tac) {
+            return res.json({'alert':'Please accept terms and conditions'});
+        }
     }
+
+    // add product
+    let docName = id == undefined ? `${name.toLowerCase()}-${Math.floor(Math.random() * 5000)}` : id;
+    db.collection('products').doc(docName).set(req.body)
+    .then(data => {
+        res.json({'product': name});
+    })
+    .catch(err => {
+        return res.json({'alert': 'some error occurred. Try again'});
+    })
+
+})
+
+// get products
+app.post('/get-products', (req, res) => {
+    let { email, id } = req.body;
+    let docRef = id ? db.collection('products').doc(id) : db.collection('products').where('email', '==', email);
+
+    docRef.get()
+    .then(products => {
+        if(products.empty){
+            return res.json('No products found');
+        }
+        let productsArray = [];
+        if(id){
+            return res.json(products.data());
+        } else{
+            products.forEach(item => {
+                let data = item.data();
+                data.id = item.id;
+                productsArray.push(data);
+            })
+            res.json(productsArray);
+        }
+    })
+})
+
+app.post('/delete-product', (req, res) => {
+    let { id } = req.body;
+    db.collection('products').doc(id).delete()
+    .then(data => {
+        res.json('success');
+    }).catch(err => {
+        res.json('err');
+    })
 })
 
 // 404 route
