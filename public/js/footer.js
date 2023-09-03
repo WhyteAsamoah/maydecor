@@ -2,7 +2,6 @@ const createFooter = () => {
     let footer = document.querySelector('footer');
 
     footer.innerHTML = `
-<<<<<<< HEAD
         <div class="footer-content">
             <div class="footer-ul-container">
                 <ul class="category">
@@ -58,9 +57,6 @@ const createFooter = () => {
         </div>
         <p class="footer-credit">Maydecor, Best AR online store for interior items</p>
 
-=======
-        <p class="footer-credit">Maydecor, Best AR online store for interior items</p>
->>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
     `;
 }
 

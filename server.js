@@ -6,7 +6,6 @@ const formidable = require("formidable");
 const bcrypt = require('bcrypt');
 const path = require('path');
 const cors = require('cors');
-<<<<<<< HEAD
 const multer = require('multer')
 
 // UPDATES: Pencode -------------------
@@ -14,8 +13,6 @@ const multer = require('multer')
 const memostore = multer.memoryStorage();
 const imgUpload = multer({ memostore });
 // -------------------------------------
-=======
->>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
 
 //declare static path
 let staticPath = path.join(__dirname, 'public');
@@ -39,7 +36,6 @@ app.use(cors(corsOptions));
 var admin = require('firebase-admin');
 
 var serviceAccount = require("./maydecor-89f84-firebase-adminsdk-bjvyw-9cf8daa04f.json");
-<<<<<<< HEAD
 const { bucket } = require('firebase-functions/v1/storage');
 const { getStorage } = require('firebase-admin/storage');
 
@@ -47,12 +43,6 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://maydecor-89f84-default-rtdb.firebaseio.com", 
     storageBucket: 'gs://maydecor-89f84.appspot.com'
-=======
-
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://maydecor-89f84-default-rtdb.firebaseio.com"
->>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
 });
 
 let db = admin.firestore();
@@ -218,7 +208,6 @@ app.post('/add-product', (req, res) => {
 
     // add product
     let docName = id == undefined ? `${name.toLowerCase()}-${Math.floor(Math.random() * 5000)}` : id;
-<<<<<<< HEAD
     // UPDATES----------------------------------
     const docRef = db.collection('products').doc(docName);
     docRef.set(req.body)
@@ -270,20 +259,6 @@ app.post('/save-product-images', imgUpload.array('image_uploads'), async (req, r
 // get products
 app.post('/get-seller-products', (req, res) => {
     
-=======
-    db.collection('products').doc(docName).set(req.body)
-    .then(data => {
-        res.json({'product': name});
-    })
-    .catch(err => {
-        return res.json({'alert': 'some error occurred. Try again'});
-    })
-
-})
-
-// get products
-app.post('/get-products', (req, res) => {
->>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
     let { email, id } = req.body;
     let docRef = id ? db.collection('products').doc(id) : db.collection('products').where('email', '==', email);
 
@@ -294,10 +269,7 @@ app.post('/get-products', (req, res) => {
         }
         let productsArray = [];
         if(id){
-<<<<<<< HEAD
             console.log(`id: ${id}`)
-=======
->>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
             return res.json(products.data());
         } else{
             products.forEach(item => {
@@ -310,7 +282,6 @@ app.post('/get-products', (req, res) => {
     })
 })
 
-<<<<<<< HEAD
 app.post('/get-products', (req, res) => {
 
     const { getImagesFromBucket } = require('./controller/product_upload_controller')
@@ -354,8 +325,6 @@ app.post('/get-product-images', async (req, res) => {
     res.status(200).json({status: 'Success', content: image_urls})
 })
 
-=======
->>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
 app.post('/delete-product', (req, res) => {
     let { id } = req.body;
     db.collection('products').doc(id).delete()
