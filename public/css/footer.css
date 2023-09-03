@@ -1,6 +1,7 @@
 footer{
     position: relative;
     width: 100%;
+<<<<<<< HEAD
     padding: 40px 10vw;
     padding-bottom: 80px;
     background: #383838;
@@ -83,6 +84,12 @@ footer{
     margin-left: 0;
 }
 
+=======
+    padding: 30px 10vw;
+    background: #383838;
+}
+
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
 .footer-credit{
     width: 100%;
     padding: 10px;
@@ -92,4 +99,21 @@ footer{
     text-align: center;
     color: #fff;
     background: rgba(0, 0, 0, 0.2);
+<<<<<<< HEAD
+=======
+    font-size: 17px;
+}
+
+@media (max-width: 768px) {
+    footer {
+        width: 100%;
+        padding: 20px;
+        background: #383838;
+    }
+
+    .footer-credit {
+        position: relative;
+        bottom: 0;
+    }
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
 }

@@ -5,11 +5,27 @@ const createNav = () => {
         <!-- navbar1 -->
         <div class="nav1">
             <a href="index.html"><img src="assets/LogoMakr.png" class="brand-logo" alt=""></a>
+<<<<<<< HEAD
             <div class="nav-items">
                 <div class="search">
                     <input type="text" class="search-box1" placeholder="search product...">
                     <button class="search-btn">search</button>
                 </div>
+=======
+            <!-- toggle btn -->
+            <div class="toggle-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="links-container">
+                <li class="link-item"><a href="index.html" class="link active">Home</a></li>
+                <li class="link-item"><a href="#" class="link">About</a></li>
+                <li class="link-item"><a href="#" class="link">Services</a></li>
+                <li class="link-item"><a href="#" class="link">Contact</a></li>
+            </ul>
+            <div class="nav-items">
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
                 <a>
                     <img src="assets/user.png" id="user-img" alt="">
                     <div class="login-logout-popup hide">
@@ -20,12 +36,15 @@ const createNav = () => {
                 <a href="#"><img src="assets/cart.png" alt=""></a>
             </div>
         </div>
+<<<<<<< HEAD
         <ul class="links-container">
             <li class="link-item active"><a href="index.html" class="link">Home</a></li>
             <li class="link-item"><a href="#" class="link">About</a></li>
             <li class="link-item"><a href="#" class="link">Services</a></li>
             <li class="link-item"><a href="#" class="link">Contact</a></li>
         </ul>
+=======
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
     `;
 }
 
@@ -61,3 +80,25 @@ window.onload = () => {
         })
     }
 }
+<<<<<<< HEAD
+=======
+
+// nav toggle
+let links = document.querySelectorAll('.links-container');
+
+links.forEach(link => {
+    link.addEventListener('click', () => {
+        links.forEach(item => item.classList.remove('active'));
+        link.classList.add('active');
+    })
+})
+
+// toggle btn
+const toggleBtn = document.querySelector('.toggle-btn');
+const ul = document.querySelector('.links-container');
+
+toggleBtn.addEventListener('click', () => {
+    ul.classList.toggle('show');
+    toggleBtn.classList.toggle('active');
+});
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183

@@ -11,6 +11,10 @@
     padding: 10px 10vw;
     display: flex;
     justify-content: space-between;
+<<<<<<< HEAD
+=======
+    align-items: center;
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
 }
 
 .brand-logo {
@@ -81,6 +85,7 @@
 
 .link {
     font-size: 2rem;
+<<<<<<< HEAD
     text-transform: none;
     padding: 0 10px;
     margin: 0 5px;
@@ -92,6 +97,21 @@
 .link:hover {
     color: var(--mainBlack);
     text-decoration: none;
+=======
+    text-transform: capitalize;
+    padding: 10px;
+    margin: 0 5px;
+    text-decoration: none;
+    color: var(--mainPink);
+    opacity: 0.5;
+    transition: .5s;
+}
+
+.link.active, .link:hover{
+    opacity: 1;
+    text-decoration: none;
+    color: var(--mainPink);
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
 }
 
 .login-logout-popup {
@@ -121,7 +141,11 @@
 
 .account-info {
     font-size: 20px;
+<<<<<<< HEAD
     text-transform: none;
+=======
+    text-transform:capitalize;
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
 }
 
 #user-btn {
@@ -142,4 +166,100 @@
     opacity: 0;
     pointer-events: none;
 }
+<<<<<<< HEAD
+=======
+
+@media screen and (max-width: 768px) {
+    .nav1{
+        padding: 10px 5vw;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .search{
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .search-box1, 
+    .search-btn{
+        width: 100%;
+    }
+
+    .nav-items{
+        margin-top: 7px;
+    }
+
+    .login-logout-popup {
+        margin: auto;
+        right: 0;
+        text-align: center;
+    }
+
+    
+
+    .toggle-btn{
+        position: relative;
+        width: 35px;
+        height: 30px;
+        border: 1px solid #cecece;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        justify-content: center;
+        align-items: center;
+      }
+    
+      .toggle-btn span{
+        width: 60%;
+        height: 1.5px;
+        background: #cecece;
+      }
+    
+      .toggle-btn.active span:nth-child(2){
+        display: none;
+      }
+    
+      .toggle-btn.active span:nth-child(1){
+        position: absolute;
+        transform: rotate(45deg);
+      }
+    
+      .toggle-btn.active span:nth-child(3){
+        position: absolute;
+        transform: rotate(-45deg);
+      }
+    
+      .links-container.active{
+        display: block;
+      }
+    
+      .links-container{
+        position: absolute;
+        top: 100%;
+        flex-direction: column;
+        width: calc(100% + 20vw);
+        left: 0;
+        background: #fcfcfc;
+        display: none;
+      }
+    
+      .link-item {
+        height: 60px;
+        width: 100%;
+      }
+    
+      .link {
+        display: block;
+        padding: 20px 10vw;
+      }
+
+}
+
+@media screen and (max-width: 450px) {
+
+}
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
   

@@ -26,6 +26,7 @@ const compareToken = (token, key) => {
 
 // common functions
 // send data function
+<<<<<<< HEAD
 const sendData = async (path, data) => {
     try{
         let res = await fetch(path, {
@@ -54,6 +55,17 @@ const sendData = async (path, data) => {
     catch{
         return false
     }
+=======
+const sendData = (path, data) => {
+    fetch(path, {
+        method: 'post',
+        headers: new Headers({'Content-Type': 'application/json'}),
+        body: JSON.stringify(data)
+    }).then((res) => res.json())
+    .then(response => {
+        processData(response);
+    })
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
 }
 
 const processData = (data) => {
@@ -88,6 +100,7 @@ const showAlert = (msg) => {
         alertBox.classList.remove('show');
     }, 3000);
     return false;
+<<<<<<< HEAD
 }
 
 // UPDATES: Pencode
@@ -130,3 +143,6 @@ const getProductImages = async (product) => {
     }
 }
 // ----------------------------------------
+=======
+}
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183

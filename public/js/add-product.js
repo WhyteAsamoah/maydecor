@@ -18,10 +18,13 @@ const actualPrice = document.querySelector('#actual-price');
 const discountPercentage = document.querySelector('#discount');
 const sellingPrice = document.querySelector('#sell-price');
 
+<<<<<<< HEAD
 // UPDATES: Pencode 
 // GET IMAGE PREVIEW DOC 
 let productImage = document.querySelector('.product-image');
 
+=======
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
 discountPercentage.addEventListener('input', () => {
     if(discountPercentage.value > 100){
         discountPercentage.value = 90;
@@ -108,12 +111,17 @@ const productData = () => {
     }
 }
 
+<<<<<<< HEAD
 addProductBtn.addEventListener('click', async () => {
     storeSizes();
     
     // save_product_images(productId)
     // return
 
+=======
+addProductBtn.addEventListener('click', () => {
+    storeSizes();
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
     // validate form
     if(validateForm()){ // return true or false while validating form
         loader.style.display = 'block';
@@ -121,17 +129,25 @@ addProductBtn.addEventListener('click', async () => {
         if(productId){
             data.id = productId;
         }
+<<<<<<< HEAD
         let sendRespone = await sendData('/add-product', data);
         console.log(sendRespone)
         if (sendRespone){
             let product_id = sendRespone['product_id']
             save_product_images(product_id)
         }
+=======
+        sendData('/add-product', data);
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
     }
 })
 
 // save draft btn
+<<<<<<< HEAD
 saveDraft.addEventListener('click', async () => {
+=======
+saveDraft.addEventListener('click', () => {
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
     // store sizes
     storeSizes();
     //check for prduct name
@@ -143,14 +159,30 @@ saveDraft.addEventListener('click', async () => {
         if(productId){
             data.id = productId;
         }
+<<<<<<< HEAD
         await sendData('/add-product', data);
+=======
+        sendData('/add-product', data);
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
     }
 })
 
 // exisiting product data handler
 
 const setFormsData = (data) => {
+<<<<<<< HEAD
     
+=======
+    productName.value = data.name;
+    shortLine.value = data.shortDes;
+    des.value = data.des;
+    actualPrice.value = data.actualPrice;
+    discountPercentage.value = data.discount;
+    sellingPrice.value = data.sellPrice;
+    stock.value = data.stock;
+    tags.value = data.tags;
+
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
     // set up images
 /*     imagePaths = data.images;
     imagePaths.forEach((url, i) => {
@@ -160,6 +192,7 @@ const setFormsData = (data) => {
         productImage.style.backgroundImage = `url(${url})`;
     }) */
 
+<<<<<<< HEAD
     // UPDATES: Pencode
     (async() => {
         productName.value = data.name;
@@ -212,6 +245,26 @@ const fetchProductData = (prod_id) => {
         method: 'POST',
         headers: new Headers({'Content-Type': 'application/json'}),
         body: JSON.stringify({email: user.email, id: prod_id})
+=======
+    // setup sizes
+    sizes = data.sizes;
+
+    let sizeCheckBox = document.querySelectorAll('.size-checkbox');
+    sizeCheckBox.forEach(item => {
+        if(sizes.includes(item.value)){
+            item.setAttribute('checked', '');
+        }
+    })
+}
+
+const fetchProductData = () => {
+    // delete the tempProduct from session
+    delete sessionStorage.tempProduct;
+    fetch('/get-products', {
+        method: 'POST',
+        headers: new Headers({'Content-Type': 'application/json'}),
+        body: JSON.stringify({email: user.email, id: productId})
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
     })
     .then((res) => res.json())
     .then(data => {
@@ -225,6 +278,7 @@ const fetchProductData = (prod_id) => {
 let productId = null;
 if(location.pathname != '/add-product'){
     productId = decodeURI(location.pathname.split('/').pop());
+<<<<<<< HEAD
     
     // let productDetail = JSON.parse(sessionStorage.tempProduct || null);
     // let productDetail = JSON.parse(sessionStorage.getItem(productId) || null);
@@ -299,3 +353,12 @@ imageInputs.forEach(input => {
     // label.style.backgroundImage = 'url(../assets/LogoMakr.png)';
 });
 // --------------------------------------------------
+=======
+
+    let productDetail = JSON.parse(sessionStorage.tempProduct || null);
+    // fetch the data if product is not in session
+    //if(productDetail == null){
+        fetchProductData();
+    //}
+}
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183

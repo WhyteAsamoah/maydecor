@@ -58,7 +58,11 @@ applyFormButton.addEventListener('click', () => {
 })
 
 const setupProducts = () => {
+<<<<<<< HEAD
     fetch('/get-seller-products', {
+=======
+    fetch('/get-products', {
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
         method: 'POST',
         headers: new Headers({"Content-Type": "application/json"}),
         body: JSON.stringify({email: user.email})
@@ -71,6 +75,7 @@ const setupProducts = () => {
             let emptySvg = document.querySelector('.no-product-image');
             emptySvg.classList.remove('hide');
         } else {
+<<<<<<< HEAD
             data.forEach(product => {
                 (async() => {
                     // UPDATES: Pencode 
@@ -117,3 +122,9 @@ const setupProducts = () => {
 //         console.error(e)
 //     }
 // }
+=======
+            data.forEach(product => createProduct(product));
+        }
+    });
+}
+>>>>>>> 3a246fd836e619c317a2bc974dbd66dbdd979183
