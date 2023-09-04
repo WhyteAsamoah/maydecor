@@ -26,15 +26,34 @@ const compareToken = (token, key) => {
 
 // common functions
 // send data function
-const sendData = (path, data) => {
-    fetch(path, {
-        method: 'post',
-        headers: new Headers({'Content-Type': 'application/json'}),
-        body: JSON.stringify(data)
-    }).then((res) => res.json())
-    .then(response => {
+const sendData = async (path, data) => {
+    try{
+        let res = await fetch(path, {
+            method: 'post',
+            headers: new Headers({'Content-Type': 'application/json'}),
+            body: JSON.stringify(data)
+        })
+
+        let response = await res.json()
         processData(response);
-    })
+        if (await res.status == 200){
+            return response
+        }
+        else {
+            return false
+        }
+        // fetch(path, {
+        //     method: 'post',
+        //     headers: new Headers({'Content-Type': 'application/json'}),
+        //     body: JSON.stringify(data)
+        // }).then((res) => res.json())
+        // .then(response => {
+        //     processData(response);
+        // })
+    }
+    catch{
+        return false
+    }
 }
 
 const processData = (data) => {
@@ -70,3 +89,44 @@ const showAlert = (msg) => {
     }, 3000);
     return false;
 }
+
+// UPDATES: Pencode
+// Send FormData -------------------------
+const sendFormData = async (path, formData) => {
+    fetch(path, {
+        method: 'post',
+        // headers: { "Content-Type": "multipart/form-data" },
+        body: formData
+    })
+    .then((res) => res.json())
+    .then(json => {
+        console.log(json)
+    })
+    .catch(ex => {
+        console.log(ex)
+    })
+}
+
+// UPDATES: Pencode
+const getProductImages = async (product) => {
+    try{
+        let fetchtRes = await fetch('/get-product-images', {
+                            method: 'POST',
+                            headers: new Headers({"Content-Type": "application/json"}),
+                            body: JSON.stringify({product: product.id})
+                        })
+    
+        if (fetchtRes.status == 200){
+            let jsonRes = await fetchtRes.json()
+            let product_images = jsonRes['content']
+            for (let i = 0; i < product_images.length; i++){
+                product[`img_${i}`] = product_images[i]
+            }
+            return product_images;
+        }
+    }
+    catch(e){
+        console.error(e)
+    }
+}
+// ----------------------------------------

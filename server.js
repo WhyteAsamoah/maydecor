@@ -6,6 +6,13 @@ const formidable = require("formidable");
 const bcrypt = require('bcrypt');
 const path = require('path');
 const cors = require('cors');
+const multer = require('multer')
+
+// UPDATES: Pencode -------------------
+
+const memostore = multer.memoryStorage();
+const imgUpload = multer({ memostore });
+// -------------------------------------
 
 //declare static path
 let staticPath = path.join(__dirname, 'public');
@@ -29,10 +36,13 @@ app.use(cors(corsOptions));
 var admin = require('firebase-admin');
 
 var serviceAccount = require("./maydecor-89f84-firebase-adminsdk-bjvyw-9cf8daa04f.json");
+const { bucket } = require('firebase-functions/v1/storage');
+const { getStorage } = require('firebase-admin/storage');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://maydecor-89f84-default-rtdb.firebaseio.com"
+    databaseURL: "https://maydecor-89f84-default-rtdb.firebaseio.com", 
+    storageBucket: 'gs://maydecor-89f84.appspot.com'
 });
 
 let db = admin.firestore();
@@ -198,18 +208,57 @@ app.post('/add-product', (req, res) => {
 
     // add product
     let docName = id == undefined ? `${name.toLowerCase()}-${Math.floor(Math.random() * 5000)}` : id;
-    db.collection('products').doc(docName).set(req.body)
-    .then(data => {
-        res.json({'product': name});
+    // UPDATES----------------------------------
+    const docRef = db.collection('products').doc(docName);
+    docRef.set(req.body)
+    .then(() => {
+        res.status(200).json({'product': name, 'product_id': docRef.id });
     })
     .catch(err => {
-        return res.json({'alert': 'some error occurred. Try again'});
+        return res.status(400).json({'alert': 'some error occurred. Try again'});
     })
+
+    return;
+    // -------------------------------
+
+    // db.collection('products').doc(docName).set(req.body)
+    // .then(data => {
+    //     res.json({'product': name });
+    // })
+    // .catch(err => {
+    //     return res.json({'alert': 'some error occurred. Try again'});
+    // })
 
 })
 
+// UPDATES: Pencoder
+// SAVE PRODUCT IMAGE 
+app.post('/save-product-images', imgUpload.array('image_uploads'), async (req, res) => {
+    const { uploadImages } = require('./controller/product_upload_controller');
+
+    const product = req.body.product
+    console.log(product)
+
+    let imgFiles = req.files
+
+    if (!imgFiles || imgFiles.length < 1){
+        return res.status(400).json({status: 'Error', msg: 'No files available'})
+    }
+    // UPLOAD IMAGES 
+    let uploadRes = await uploadImages(imgFiles, product)
+    // console.log(uploadRes)
+
+    // if (uploadRes && uploadRes.status == 'Success'){
+    //     res.status(200).json(uploadRes)
+    // }else {
+    //     res.status(400).json(uploadRes)
+    // }
+    // res.json({response: 'files here'})
+})
+
 // get products
-app.post('/get-products', (req, res) => {
+app.post('/get-seller-products', (req, res) => {
+    
     let { email, id } = req.body;
     let docRef = id ? db.collection('products').doc(id) : db.collection('products').where('email', '==', email);
 
@@ -220,6 +269,7 @@ app.post('/get-products', (req, res) => {
         }
         let productsArray = [];
         if(id){
+            console.log(`id: ${id}`)
             return res.json(products.data());
         } else{
             products.forEach(item => {
@@ -230,6 +280,49 @@ app.post('/get-products', (req, res) => {
             res.json(productsArray);
         }
     })
+})
+
+app.post('/get-products', (req, res) => {
+
+    const { getImagesFromBucket } = require('./controller/product_upload_controller')
+
+    let { id } = req.body;
+    let docRef = id ? db.collection('products').doc(id) : db.collection('products');
+
+    docRef.get()
+    .then(products => {
+        if(products.empty){
+            return res.json('No products found');
+        }
+        let productsArray = [];
+        if(id){
+            console.log(`id: ${id}`)
+            return res.json(products.data());
+        } else{
+            products.forEach(item => {
+                let data = item.data();
+                data.id = item.id;
+                productsArray.push(data);
+            })
+            res.status(200).json(productsArray);
+        }
+    })
+})
+
+// UPDATES: Pencode 
+// GET PRODUCT IMAGES 
+app.post('/get-product-images', async (req, res) => {
+    const { getImagesFromBucket } = require('./controller/product_upload_controller')
+
+    let { product } = req.body
+    let image_urls = await getImagesFromBucket(product)
+    // let image_files = await getImagesFromBucket(product)
+    // for (let i = 0; i < image_files.length; i++){
+    //     let url = await image_files[i].getSignedUrl({action: 'read', expires: "03-01-2500"})
+    //     image_urls.push(url)
+    // }
+
+    res.status(200).json({status: 'Success', content: image_urls})
 })
 
 app.post('/delete-product', (req, res) => {

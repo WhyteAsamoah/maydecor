@@ -1,19 +1,31 @@
-let openEditor;
+// let openEditor;
+function openEditor(product_data){
+    // sessionStorage.setItem(data.id, data)
+    // sessionStorage.tempProduct = JSON.stringify(data);
+    let decoded = decodeURIComponent(product_data)
+    let decoded_data = JSON.parse(decoded)
+    location.href = `/add-product/${decoded_data.id}`
+}
 
 const createProduct = (data) => {
 
-    openEditor = () => {
-        sessionStorage.tempProduct = JSON.stringify(data);
-        location.href = `/add-product/${data.id}`
-    }
+    // openEditor = (product_data) => {
+    //     sessionStorage.setItem(data.id, data)
+    //     // sessionStorage.tempProduct = JSON.stringify(data);
+    //     // location.href = `/add-product/${data.id}`
+    // }
+    
+    // UPDATE: Pencode
+    // SET IMAGE SOURCE 
+    let img_source = data.img_0 ?? "../assets/no image.png"
 
     let productContainer = document.querySelector('.product-container');
     productContainer.innerHTML += `
     <div class="product-card">
         <div class="product-image">
             ${data.draft ? `<span class="tag">Draft</span>` : ''}
-            <img src="../assets/no image.png" class="product-thumb" alt="">
-            <button class="card-action-btn edit-btn" onclick="openEditor()"><img src="../assets/edit.png" alt=""></button>
+            <img src="${img_source}"  class="product-thumb" alt="">
+            <button class="card-action-btn edit-btn" onclick="openEditor('${encodeURIComponent(JSON.stringify(data))}')"><img src="../assets/edit.png" alt=""></button>
             <button class="card-action-btn open-btn" onclick="location.href = '/${data.id}'"><img src="../assets/open.png" alt=""></button>
             <button class="card-action-btn delete-popup-btn" onclick="openDeletePopup('${data.id}')"><img src="../assets/delete.png" alt=""></button>
         </div>

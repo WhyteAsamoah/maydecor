@@ -18,6 +18,10 @@ const actualPrice = document.querySelector('#actual-price');
 const discountPercentage = document.querySelector('#discount');
 const sellingPrice = document.querySelector('#sell-price');
 
+// UPDATES: Pencode 
+// GET IMAGE PREVIEW DOC 
+let productImage = document.querySelector('.product-image');
+
 discountPercentage.addEventListener('input', () => {
     if(discountPercentage.value > 100){
         discountPercentage.value = 90;
@@ -104,8 +108,12 @@ const productData = () => {
     }
 }
 
-addProductBtn.addEventListener('click', () => {
+addProductBtn.addEventListener('click', async () => {
     storeSizes();
+    
+    save_product_images(productId)
+    return
+
     // validate form
     if(validateForm()){ // return true or false while validating form
         loader.style.display = 'block';
@@ -113,12 +121,17 @@ addProductBtn.addEventListener('click', () => {
         if(productId){
             data.id = productId;
         }
-        sendData('/add-product', data);
+        let sendRespone = await sendData('/add-product', data);
+        console.log(sendRespone)
+        if (sendRespone){
+            let product_id = sendRespone['product_id']
+            save_product_images(product_id)
+        }
     }
 })
 
 // save draft btn
-saveDraft.addEventListener('click', () => {
+saveDraft.addEventListener('click', async () => {
     // store sizes
     storeSizes();
     //check for prduct name
@@ -130,22 +143,14 @@ saveDraft.addEventListener('click', () => {
         if(productId){
             data.id = productId;
         }
-        sendData('/add-product', data);
+        await sendData('/add-product', data);
     }
 })
 
 // exisiting product data handler
 
 const setFormsData = (data) => {
-    productName.value = data.name;
-    shortLine.value = data.shortDes;
-    des.value = data.des;
-    actualPrice.value = data.actualPrice;
-    discountPercentage.value = data.discount;
-    sellingPrice.value = data.sellPrice;
-    stock.value = data.stock;
-    tags.value = data.tags;
-
+    
     // set up images
 /*     imagePaths = data.images;
     imagePaths.forEach((url, i) => {
@@ -155,24 +160,58 @@ const setFormsData = (data) => {
         productImage.style.backgroundImage = `url(${url})`;
     }) */
 
-    // setup sizes
-    sizes = data.sizes;
+    // UPDATES: Pencode
+    (async() => {
+        productName.value = data.name;
+        shortLine.value = data.shortDes;
+        des.value = data.des;
+        actualPrice.value = data.actualPrice;
+        discountPercentage.value = data.discount;
+        sellingPrice.value = data.sellPrice;
+        stock.value = data.stock;
+        tags.value = data.tags;
 
-    let sizeCheckBox = document.querySelectorAll('.size-checkbox');
-    sizeCheckBox.forEach(item => {
-        if(sizes.includes(item.value)){
-            item.setAttribute('checked', '');
+        if (data.id){
+            // FETCH PRODUCT IMAGES 
+            let productImages = await getProductImages(data)
+            // console.log(productImages)
+            if (productImages){
+                
+                // SET IMAGE PREVIEW TO FIRST PRODUCT IMAGE 
+                productImage.style.backgroundImage = `url(${[productImages[0]]})`;
+                // GET ALL IMAGE FILE INPUT DOCS 
+                let imageInputsDoc = document.querySelectorAll('input[type=file]');
+                productImages.forEach(([url], i) => {
+                    imageInputsDoc[i].src = `${url}`;
+                    let inputLabel = imageInputsDoc[i].labels[0]
+                    inputLabel.style.backgroundImage = `url(${url})`;
+
+                    // let label = document.querySelector(`label[for=${uploadImages[i].id}]`);
+                    // label.style.backgroundImage = `url(${url})`;
+                    // let productImage = document.querySelector('.product-image');
+                    // productImage.style.backgroundImage = `url(${url})`;
+                });
+            }
         }
-    })
+        // setup sizes
+        sizes = data.sizes;
+
+        let sizeCheckBox = document.querySelectorAll('.size-checkbox');
+        sizeCheckBox.forEach(item => {
+            if(sizes.includes(item.value)){
+                item.setAttribute('checked', '');
+            }
+        })
+    })();    
 }
 
-const fetchProductData = () => {
+const fetchProductData = (prod_id) => {
     // delete the tempProduct from session
     delete sessionStorage.tempProduct;
-    fetch('/get-products', {
+    fetch('/get-seller-products', {
         method: 'POST',
         headers: new Headers({'Content-Type': 'application/json'}),
-        body: JSON.stringify({email: user.email, id: productId})
+        body: JSON.stringify({email: user.email, id: prod_id})
     })
     .then((res) => res.json())
     .then(data => {
@@ -186,10 +225,77 @@ const fetchProductData = () => {
 let productId = null;
 if(location.pathname != '/add-product'){
     productId = decodeURI(location.pathname.split('/').pop());
-
-    let productDetail = JSON.parse(sessionStorage.tempProduct || null);
+    
+    // let productDetail = JSON.parse(sessionStorage.tempProduct || null);
+    // let productDetail = JSON.parse(sessionStorage.getItem(productId) || null);
     // fetch the data if product is not in session
     //if(productDetail == null){
-        fetchProductData();
+        fetchProductData(productId);
     //}
 }
+
+// UPDATES: Pencode
+// HELPERS 
+// Convert object to FormData---------------------
+function object_to_formdata(obj){
+    const formData = new FormData();
+    Object.entries(obj).forEach(([key, value]) => {
+        formData.append(key, value)
+    });
+
+    return formData
+}
+// SAVE IMAGES 
+async function save_product_images(product_id=''){
+    
+    product_id = product_id.replaceAll(/ /g , '_')
+    // GET ALL IMAGE HTML DOCS BY CLASS NAME 
+    let imagesDocs = document.getElementsByClassName('product-image-upload')
+    // FORMDATA OBJECT
+    let imageFilesData = new FormData();
+    // console.log(imagesDocs.length)
+    imageFilesData.append('product', product_id)
+    // LOOP LIST OF IMAGE DOCUMENTS 
+    for (var i = 0; i < imagesDocs.length; i++){
+        let img = imagesDocs[i].files[0]
+        // console.log(img)
+        if (img !== undefined){
+            let filetype = img.type
+            let ext = filetype.split('/').slice(-1)[0]
+            // CHANGE THE FILE NAME WITH APPENDED INDEX
+            // let newFile = new File([img], `${product}-0${i}.${ext}`, { type: img.type})
+            let newFile = new File([img], `${product_id}-0${i}.png`, { type: img.type})
+            // APPEND UPLOADED IMAGE FILES TO FORMDATA OBJECT 
+            imageFilesData.append('image_uploads', newFile)
+        }
+        // else if (imagesDocs[i].src){ }
+    }
+    
+    // SEND FORMDATA TO BACKEND SERVER
+    if (imageFilesData.has('image_uploads')){
+        // console.log(imageFilesData.has('image_uploads'))
+        sendFormData('/save-product-images', imageFilesData);
+    }
+    
+}
+
+// IMAGE INPUTS CLICK 
+const imageInputs = document.querySelectorAll('input[type=file]');
+imageInputs.forEach(input => {
+    input.addEventListener("change", function(){
+        console.log('....changed.....')
+        let inputFile = input.files[0];
+        if (inputFile){
+            let imgUrl = URL.createObjectURL(inputFile);
+            // SET IMAGE PREVIEW TO FIRST PRODUCT IMAGE 
+            productImage.style.backgroundImage = `url(${imgUrl})`;
+            for (let label of input.labels){
+                label.style.backgroundImage = `url(${imgUrl})`;
+            }
+            // URL.revokeObjectURL(imgUrl);
+        }
+    })
+    
+    // label.style.backgroundImage = 'url(../assets/LogoMakr.png)';
+});
+// --------------------------------------------------
