@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- main css -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <title>MayDecor</title>
+    <style></style>
+</head>
+
+<body>
+    <!-- header -->
+    <header>
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-lg px-4">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets\logo.svg" alt="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNav">
+                <span class="toggler-icon"><i class="fas fa-bars"></i></span>
+            </button>
+            <div class="collapse navbar-collapse" id="myNav">
+                <ul class="navbar-nav mx-auto text-capitalize">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+
+                </ul>
+                <div class="nav-info-items d-none d-lg-flex">
+                    <!-- single info-->
+                    <div class="nav-info align-items-center d-flex justify-content-between mx-lg-5">
+                        <span class="info__icon mx-lg-3"><i class="fas fa-phone"></i></span>
+                        <p class="mb-0">+1 234 567 890</p>
+                    </div>
+                    <!-- end of single info-->
+                    <!-- single info-->
+                    <div id="cart-info" class="nav-info align-items-center cart-info d-flex justify-content-lg-between mx-lg-5">
+                        <span class="cart-info__icon mr-lg-3"><i class="fas fa-shopping-cart"></i></span>
+                        <p class="mb-0 text-capitalize"><span id="item-count">2</span> items -$<span
+                                class="item-total">10.49</span></p>
+                    </div>
+                    <!-- end of single info-->
+                </div>
+            </div>
+        </nav>
+        <!-- end of navbar -->
+        <!-- banner -->
+        <div class="container-fluid">
+            <div class="row max-height justify-content-center align-items-center">
+                <div class="col-10 mx-auto banner text-center">
+                    <h1 class="text-capitalize">Welcome to <strong class="banner-title ">Maydecor</strong></h1>
+                    <br>
+                    <a href="#store" class="banner-link text-uppercase my-2">explore</a>
+                </div>
+               
+            </div>
+        </div>
+        <!-- end of banner -->
+    </header>
+
+    <!-- about us -->
+    <section class="about py-5" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-10 mx-auto col-md-6 my-5">
+                    <h1 class="text-capitalize">about <strong class="banner-title ">maydecor</strong></h1>
+                    <p class="my-4 text-muted w-75">Lorem ipsum dolor sit amet consectetur adipisicing elit
+                        sedc dnmo eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+                        eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                        qui officia deserunt mollit anim id est laborum.</p>
+                    <a href="#" class="btn btn-outline-secondary btn-black text-uppercase ">explore</a>
+                </div>
+                <div class="col-10 mx-auto col-md-6 my-5 align-self-center">
+                    <div class="about-img__container">
+                        <img src="assets\room-2-toa-heftiba-unsplash.jpg" alt="about us"
+                            class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end of about us -->
+
+    <!-- store -->
+    <section id="store" class="store py-5">
+        <div class="container">
+            <!-- section title -->
+            <div class="row">
+                <div class="col-10 mx-auto col-sm-6 text-center">
+                    <h1 class="text-capitalize">our <strong class="banner-title ">products</strong></h1>
+                </div>
+            </div>
+            <!-- end of section title -->
+            <!-- filter buttons -->
+            <div class="row">
+                <div class="col-lg-8 mx-auto d-flex justify-content-around my-2 sortBtn flex-wrap">
+                    <a href="#" class="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="all"> all</a>
+                    <a href="#" class="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="chairs">chairs</a>
+                    <a href="#" class="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="desks">desks</a>
+                    <a href="#" class="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="lamps">lamps</a>
+                    <a href="#" class="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="plants">plants</a>
+                    <a href="#" class="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="shelves">shelves</a>
+                    <a href="#" class="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="wallprints">wallprints</a>
+                </div>
+            </div>
+
+            <!-- search box -->
+            <div class="row">
+                <div class="col-10 mx-auto col-md-6">
+                    <form action="">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text search-box" id="search-icon">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="search...." id="search-item">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- end of search box -->
+            <!-- store items -->
+            <div class="container" id="store-items">
+                
+                <div class="products-container">
+
+                    <div class="product" data-name="p-1">
+                        <img src="assets\img\products1.png" alt="">
+                        <div class="card-body">
+                            <div class="card-text d-flex justify-content-between text-capitalize">
+                              <h3 id="store-item-name">Product 1</h3>
+                              <div class="price">$2</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product" data-name="p-2">
+                        <img src="assets\img\products2.png" alt="">
+                        <div class="card-body">
+                            <div class="card-text d-flex justify-content-between text-capitalize">
+                              <h3 id="store-item-name">Product 2</h3>
+                              <div class="price">$5</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product" data-name="p-3">
+                        <img src="assets\img\products4.png" alt="">
+                        <div class="card-body">
+                            <div class="card-text d-flex justify-content-between text-capitalize">
+                              <h3 id="store-item-name">Product 3</h3>
+                              <div class="price">$15</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product" data-name="p-4">
+                        <img src="assets\img\products5.png" alt="">
+                        <div class="card-body">
+                            <div class="card-text d-flex justify-content-between text-capitalize">
+                              <h3 id="store-item-name">Product 4</h3>
+                              <div class="price">$2</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product" data-name="p-5">
+                        <img src="assets\img\products6.png" alt="">
+                        <div class="card-body">
+                            <div class="card-text d-flex justify-content-between text-capitalize">
+                              <h3 id="store-item-name">Product 5</h3>
+                              <div class="price">$15</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product" data-name="p-6">
+                        <img src="assets\img\Sofa.png" alt="">
+                        <div class="card-body">
+                            <div class="card-text d-flex justify-content-between text-capitalize">
+                              <h3 id="store-item-name">Product 6</h3>
+                              <div class="price">$10</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+               
+            </div>
+
+            <div class="products-preview">
+
+                <div class="preview" data-target="p-1">
+                    <i class="fas fa-times"></i>
+                    <div class="img-container">
+                        <img src="assets\img\products1.png" class="store-img" alt="">
+                        <span class="store-item-icon">
+                          <i class="fas fa-shopping-cart"></i>
+                        </span>
+                    </div>
+                    <h3>Some type of furniture</h3>
+                    <div class="stars">
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star-half-alt"></i>
+                       <span>( 250 )</span>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, dolorem.</p>
+                    <div class="price">$2.00</div>
+                    <div class="buttons">
+                        <a href="#" class="btn btn-outline-secondary btn-black text-uppercase buy">buy now</a>
+                        <a href="#" class="btn btn-outline-secondary btn-black text-uppercase enterAR">View in Room</a>
+                    </div>
+                </div>
+
+                <div class="preview" data-target="p-2">
+                    <i class="fas fa-times"></i>
+                    <div class="img-container">
+                        <img src="assets\img\products2.png" class="store-img" alt="">
+                        <span class="store-item-icon">
+                          <i class="fas fa-shopping-cart"></i>
+                        </span>
+                    </div>
+                    <h3>Some type of furniture</h3>
+                    <div class="stars">
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star-half-alt"></i>
+                       <span>( 250 )</span>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, dolorem.</p>
+                    <div class="price">$2.00</div>
+                    <div class="buttons">
+                        <a href="#" class="btn btn-outline-secondary btn-black text-uppercase buy">buy now</a>
+                        <a href="#" class="btn btn-outline-secondary btn-black text-uppercase enterAR">View in Room</a>
+                    </div>
+                </div>
+
+                <div class="preview" data-target="p-3">
+                    <i class="fas fa-times"></i>
+                    <div class="img-container">
+                        <img src="assets\img\products4.png" class="store-img" alt="">
+                        <span class="store-item-icon">
+                          <i class="fas fa-shopping-cart"></i>
+                        </span>
+                    </div>
+                    <h3>Some type of furniture</h3>
+                    <div class="stars">
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star-half-alt"></i>
+                       <span>( 250 )</span>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, dolorem.</p>
+                    <div class="price">$2.00</div>
+                    <div class="buttons">
+                        <a href="#" class="btn btn-outline-secondary btn-black text-uppercase buy">buy now</a>
+                        <a href="#" class="btn btn-outline-secondary btn-black text-uppercase enterAR">View in Room</a>
+                    </div>
+                </div>
+
+                <div class="preview" data-target="p-4">
+                    <i class="fas fa-times"></i>
+                    <div class="img-container">
+                        <img src="assets\img\products5.png" class="store-img" alt="">
+                        <span class="store-item-icon">
+                          <i class="fas fa-shopping-cart"></i>
+                        </span>
+                    </div>
+                    <h3>Some type of furniture</h3>
+                    <div class="stars">
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star-half-alt"></i>
+                       <span>( 250 )</span>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, dolorem.</p>
+                    <div class="price">$2.00</div>
+                    <div class="buttons">
+                        <a href="#" class="btn btn-outline-secondary btn-black text-uppercase buy">buy now</a>
+                        <a href="#" class="btn btn-outline-secondary btn-black text-uppercase enterAR">View in Room</a>
+                    </div>
+                </div>
+
+                <div class="preview" data-target="p-5">
+                    <i class="fas fa-times"></i>
+                    <div class="img-container">
+                        <img src="assets\img\products6.png" class="store-img" alt="">
+                        <span class="store-item-icon">
+                          <i class="fas fa-shopping-cart"></i>
+                        </span>
+                    </div>
+                    <h3>Some type of furniture</h3>
+                    <div class="stars">
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star-half-alt"></i>
+                       <span>( 250 )</span>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, dolorem.</p>
+                    <div class="price">$2.00</div>
+                    <div class="buttons">
+                        <a href="#" class="btn btn-outline-secondary btn-black text-uppercase buy">buy now</a>
+                        <a href="#" class="btn btn-outline-secondary btn-black text-uppercase enterAR">View in Room</a>
+                    </div>
+                </div>
+
+                <div class="preview" data-target="p-6">
+                    <i class="fas fa-times"></i>
+                    <div class="img-container">
+                        <img src="assets\img\Sofa.png" class="store-img" alt="">
+                        <span class="store-item-icon">
+                          <i class="fas fa-shopping-cart"></i>
+                        </span>
+                    </div>
+                    <h3>Some type of furniture</h3>
+                    <div class="stars">
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star"></i>
+                       <i class="fas fa-star-half-alt"></i>
+                       <span>( 250 )</span>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, dolorem.</p>
+                    <div class="price">$2.00</div>
+                    <div class="buttons">
+                        <a href="#" class="btn btn-outline-secondary btn-black text-uppercase buy">buy now</a>
+                        <a href="#" class="btn btn-outline-secondary btn-black text-uppercase enterAR">View in Room</a>
+                    </div>
+                </div>
+            </div>
+
+            
+    </section>
+    <!-- end of store section -->
+
+    <!-- Footer -->
+    <footer class="modal-footer">
+
+        <!-- Footer Links -->
+        <div class="container-fluid text-center text-md-left">
+
+            <!-- Grid row -->
+            <div class="row">
+
+                <!-- Grid column -->
+                <div class="col-md-6 mt-md-0 mt-3">
+
+                    <!-- Content -->
+                    <h5 class="text-uppercase">Footer Content</h5>
+                    <p>Here you can use rows and columns to organize your footer content.</p>
+
+                </div>
+                <!-- Grid column -->
+
+                <hr class="clearfix w-100 d-md-none pb-3">
+
+            </div>
+            <!-- Grid row -->
+
+        </div>
+        <!-- Footer Links -->
+
+        <hr>
+
+        <!-- Call to action -->
+        <ul class="list-unstyled list-inline text-center py-2">
+            <li class="list-inline-item">
+                <h5 class="mb-1">Register for free</h5>
+            </li>
+            <li class="list-inline-item">
+                <a href="#!" class="btn btn-danger btn-rounded">Sign up!</a>
+            </li>
+        </ul>
+        <!-- Call to action -->
+    </footer>
+
+    <!-- modal container -->
+   
+
+    <!-- end of modal container -->
+
+    <!-- jquery -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- bootstrap js -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <!-- script js -->
+    <script src="js/app.js"></script>
+
+
+</body>
+
+
+</html>
