@@ -58,7 +58,7 @@ applyFormButton.addEventListener('click', () => {
 })
 
 const setupProducts = () => {
-    fetch('/get-seller-products', {
+    fetch('/get-products', {
         method: 'POST',
         headers: new Headers({"Content-Type": "application/json"}),
         body: JSON.stringify({email: user.email})
@@ -71,49 +71,7 @@ const setupProducts = () => {
             let emptySvg = document.querySelector('.no-product-image');
             emptySvg.classList.remove('hide');
         } else {
-            data.forEach(product => {
-                (async() => {
-                    // UPDATES: Pencode 
-                    await getProductImages(product)
-                    // console.log(`NEW product: ${JSON.stringify(product)}`)
-                    createProduct(product)
-                })();
-            });
+            data.forEach(product => createProduct(product));
         }
     });
 }
-
-// // UPDATES: Pencode
-// const getProductImages = async (product) => {
-//     try{
-//     let fetchtRes = await fetch('/get-product-images', {
-//                         method: 'POST',
-//                         headers: new Headers({"Content-Type": "application/json"}),
-//                         body: JSON.stringify({product: product.id})
-//                     })
-    
-//         if (fetchtRes.status == 200){
-//             let jsonRes = await fetchtRes.json()
-//             let product_images = jsonRes['content']
-//             for (let i = 0; i < product_images.length; i++){
-//                 product[`img_${i}`] = product_images[i]
-//             }
-//         }
-
-//         // .then((res) => {
-//         //     if (res.status == 200){
-//         //         return res.json()
-//         //     }else {
-
-//         //     }
-//         // }).then(json => {
-            
-//         // })
-//         // .catch(ex => {
-//         //     console.log(ex)
-//         // })
-//     }
-//     catch(e){
-//         console.error(e)
-//     }
-// }

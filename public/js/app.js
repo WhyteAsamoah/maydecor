@@ -24,46 +24,16 @@ previewBox.forEach(close => {
 });
 
 
-// UPDATE: Pencode
-// CREATE PRODUCT CARD 
-const createProductItem = (product) => {
-    let img_source = product.img_0 ?? "../assets/no image.png"
-
-    let productContainer = document.querySelector('.products-container');
-    productContainer.innerHTML += 
-    `
-        <div class="product store-item chairs" data-name="p-1" data-item="chairs">
-            <img src="${img_source}" alt="">
-            <div class="card-body">
-                <div class="card-text d-flex justify-content-between text-capitalize">
-                    <h3 id="store-item-name">${product.name}</h3>
-                    <div class="price">$${product.sellPrice}</div>
-                </div>
-            </div>
-        </div>
-    `
-}
 
 //show cart toggle
 (function(){
-    // const cartInfo = document.getElementById('cart-info');
-    // const cart = document.getElementById('cart');
+    const cartInfo = document.getElementById('cart-info');
+    const cart = document.getElementById('cart');
 
-    // cartInfo.addEventListener('click', function(){
-    //     cart.classList.toggle('show-cart');
-    // })
-})();
-
-// UPDATE: Pencode
-// GET PRODUCTS INFORMATION 
-(async function(){
-    let productsInfo = await getProductsInfo();
-    console.log(productsInfo)
-    productsInfo.forEach(product => {
-        createProductItem(product);
+    cartInfo.addEventListener('click', function(){
+        cart.classList.toggle('show-cart');
     })
 })();
-
 
 // How much items selected and what total price before selecting any items
 (function(){
