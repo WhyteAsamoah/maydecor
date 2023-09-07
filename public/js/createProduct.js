@@ -21,7 +21,7 @@ const createProduct = (data) => {
 
     let productContainer = document.querySelector('.product-container');
     productContainer.innerHTML += `
-    <div class="product-card col-md-3 col-lg-3">
+    <div class="product-card col-md-6 col-lg-6">
         <div class="product-image">
             ${data.draft ? `<span class="tag">Draft</span>` : ''}
             <img src="${img_source}"  class="product-thumb" alt="">

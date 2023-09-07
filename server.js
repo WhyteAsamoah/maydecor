@@ -269,7 +269,7 @@ app.post('/get-seller-products', (req, res) => {
         }
         let productsArray = [];
         if(id){
-            console.log(`id: ${id}`)
+            // console.log(`id: ${id}`)
             return res.json(products.data());
         } else{
             products.forEach(item => {
@@ -296,7 +296,7 @@ app.post('/get-products', (req, res) => {
         }
         let productsArray = [];
         if(id){
-            console.log(`id: ${id}`)
+            // console.log(`id: ${id}`)
             return res.json(products.data());
         } else{
             products.forEach(item => {

@@ -111,8 +111,8 @@ const productData = () => {
 addProductBtn.addEventListener('click', async () => {
     storeSizes();
     
-    save_product_images(productId)
-    return
+    // save_product_images(productId)
+    // return
 
     // validate form
     if(validateForm()){ // return true or false while validating form
@@ -179,6 +179,8 @@ const setFormsData = (data) => {
                 
                 // SET IMAGE PREVIEW TO FIRST PRODUCT IMAGE 
                 productImage.style.backgroundImage = `url(${[productImages[0]]})`;
+                productImage.style.backgroundSize = 'contain';
+                productImage.style.backgroundRepeat = 'no-repeat';
                 // GET ALL IMAGE FILE INPUT DOCS 
                 let imageInputsDoc = document.querySelectorAll('input[type=file]');
                 productImages.forEach(([url], i) => {
