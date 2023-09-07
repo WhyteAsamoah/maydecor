@@ -3,7 +3,7 @@
     display: flex;
     overflow-x: auto;
     scroll-behavior: smooth;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
 }
 
 .product-container::-webkit-scrollbar{

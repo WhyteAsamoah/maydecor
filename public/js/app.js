@@ -1,28 +1,5 @@
 // pop up modal when click on the product card
 let previewContainer = document.querySelector('.products-preview');
-let previewBox = previewContainer.querySelectorAll('.preview');
-
-document.querySelectorAll('.products-container .product').forEach((product) => {
-    product.onclick = () => {
-        previewContainer.style.display = 'flex';
-        let name = product.getAttribute('data-name');
-        previewBox.forEach(preview =>{
-            let target = preview.getAttribute('data-target');
-            if (name == target) {
-                preview.classList.add('active');
-            } 
-        });
-    } 
-});
-
-// close modal when click on the close button
-previewBox.forEach(close => {
-    close.querySelector('.fa-times').onclick = () => {
-        close.classList.remove('active');
-        previewContainer.style.display = 'none';
-    }
-});
-
 
 // UPDATE: Pencode
 // CREATE PRODUCT CARD 
@@ -44,6 +21,99 @@ const createProductItem = (product) => {
     `
 }
 
+// UPDATE: Pencode 
+// POP UP PREVIEW FOR PRODUCT INFO 
+const createProductPreview = (product) => {
+    let img_source = product.img_0 ?? "../assets/no image.png"
+
+    previewContainer.innerHTML += 
+        `
+        <div class="preview" data-target="p-1">
+            <br>
+            <i class="fas fa-times"></i>
+            <div class="img-container">
+                <img src="${img_source}" class="store-img" alt="">
+                <span class="store-item-icon">
+                <i class="fas fa-shopping-cart"></i>
+                </span>
+            </div>
+            <br>
+            <h3>${product.name}</h3>
+            <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+            <span>( 250 )</span>
+            </div>
+            <p>${product.shortDes}</p>
+            <div class="price">$${product.sellPrice}</div>
+            <div class="buttons">
+                <a href="#" class="btn btn-outline-secondary btn-black text-uppercase buy">buy now</a>
+                <a href="#" class="btn btn-outline-secondary btn-black text-uppercase enterAR">View in Room</a>
+            </div>
+        </div>
+        `;
+}
+
+
+// UPDATE: Pencode
+// GET PRODUCTS INFORMATION 
+(async function(){
+    let productsInfo = await getProductsInfo();
+    // console.log(productsInfo)
+    productsInfo.forEach(product => {
+        createProductItem(product);
+        createProductPreview(product);
+    });
+
+    let previewBox = previewContainer.querySelectorAll('.preview');
+
+    document.querySelectorAll('.products-container .product').forEach((productItem, i) => {
+        // product.onclick = () => {
+        //     console.log('clicked....')
+        //     previewContainer.style.display = 'flex';
+        //     let name = product.getAttribute('data-name');
+        //     previewBox.forEach(preview =>{
+        //         let target = preview.getAttribute('data-target');
+        //         if (name == target) {
+        //             preview.classList.add('active');
+        //         } 
+        //     });
+        // }
+        let previewBoxItem = previewBox.item(i);
+
+        productItem.addEventListener("click", function(event){
+            // console.log('clicked....')
+            previewContainer.style.display = 'flex';
+            // let name = productItem.getAttribute('data-name');
+            // previewBox.forEach(preview =>{
+            //     let target = preview.getAttribute('data-target');
+            //     if (name == target) {
+            //         preview.classList.add('active');
+            //     } 
+            // });
+            previewBoxItem.classList.add('active');
+        }) 
+
+        // close modal when click on the close button
+        // previewBox.forEach(close => {
+        //     close.querySelector('.fa-times').onclick = () => {
+        //         close.classList.remove('active');
+        //         previewContainer.style.display = 'none';
+        //     }
+        // });
+        previewBoxItem.querySelector('.fa-times').onclick = () => {
+            previewBoxItem.classList.remove('active');
+            previewContainer.style.display = 'none';
+        }
+    });
+})();
+
+
+
+
 //show cart toggle
 (function(){
     // const cartInfo = document.getElementById('cart-info');
@@ -52,16 +122,6 @@ const createProductItem = (product) => {
     // cartInfo.addEventListener('click', function(){
     //     cart.classList.toggle('show-cart');
     // })
-})();
-
-// UPDATE: Pencode
-// GET PRODUCTS INFORMATION 
-(async function(){
-    let productsInfo = await getProductsInfo();
-    console.log(productsInfo)
-    productsInfo.forEach(product => {
-        createProductItem(product);
-    })
 })();
 
 
@@ -78,9 +138,9 @@ const createProductItem = (product) => {
         return total;
     }, 0)
     const finalMoney = totalMoney.toFixed(2);
-    document.getElementById('cart-total').textContent = finalMoney;
-    document.querySelector('.item-total').textContent = finalMoney;
-    document.getElementById('item-count').textContent = total.length
+    // document.getElementById('cart-total').textContent = finalMoney;
+    // document.querySelector('.item-total').textContent = finalMoney;
+    // document.getElementById('item-count').textContent = total.length
     
 })();
 
@@ -157,9 +217,9 @@ const createProductItem = (product) => {
             return total;
         }, 0)
         const finalMoney = totalMoney.toFixed(2);
-        document.getElementById('cart-total').textContent = finalMoney;
-        document.querySelector('.item-total').textContent = finalMoney;
-        document.getElementById('item-count').textContent = total.length
+        // document.getElementById('cart-total').textContent = finalMoney;
+        // document.querySelector('.item-total').textContent = finalMoney;
+        // document.getElementById('item-count').textContent = total.length
         
     }
 })();
