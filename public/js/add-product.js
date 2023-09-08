@@ -175,18 +175,21 @@ const setFormsData = (data) => {
             // FETCH PRODUCT IMAGES 
             let productImages = await getProductImages(data)
             // console.log(productImages)
-            if (productImages){
+            if (productImages && productImages.length > 0){
                 
                 // SET IMAGE PREVIEW TO FIRST PRODUCT IMAGE 
                 productImage.style.backgroundImage = `url(${[productImages[0]]})`;
+                productImage.style.backgroundPosition = 'center';
                 productImage.style.backgroundSize = 'contain';
                 productImage.style.backgroundRepeat = 'no-repeat';
+                productImage.innerHTML = '';
                 // GET ALL IMAGE FILE INPUT DOCS 
                 let imageInputsDoc = document.querySelectorAll('input[type=file]');
                 productImages.forEach(([url], i) => {
                     imageInputsDoc[i].src = `${url}`;
                     let inputLabel = imageInputsDoc[i].labels[0]
                     inputLabel.style.backgroundImage = `url(${url})`;
+                    inputLabel.style.backgroundRepeat = 'no-repeat';
 
                     // let label = document.querySelector(`label[for=${uploadImages[i].id}]`);
                     // label.style.backgroundImage = `url(${url})`;
