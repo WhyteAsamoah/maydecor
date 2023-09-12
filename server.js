@@ -6,10 +6,10 @@ const formidable = require("formidable");
 const bcrypt = require('bcrypt');
 const path = require('path');
 const cors = require('cors');
-const multer = require('multer')
+const multer = require('multer');
+const fs = require('fs');
 
 // UPDATES: Pencode -------------------
-
 const memostore = multer.memoryStorage();
 const imgUpload = multer({ memostore });
 // -------------------------------------
@@ -24,13 +24,13 @@ app.use(express.static(staticPath));
 app.use(express.json({limit: '50mb', extended: true})); // parse json data
 app.use(express.urlencoded({limit: '50mb', extended: false})); // parse urlencoded data
 
-const corsOptions = {
-    origin: 'http://localhost:3000', 'https://maydecor-89f84.web.app': 'https://maydecor-89f84.firebaseapp.com',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'Content-Type,Authorization'
-};
+// const corsOptions = {
+//     origin: 'http://localhost:3000', 'https://maydecor-89f84.web.app': 'https://maydecor-89f84.firebaseapp.com',
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     allowedHeaders: 'Content-Type,Authorization'
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 // firebase admin setup
 var admin = require('firebase-admin');
@@ -284,8 +284,6 @@ app.post('/get-seller-products', (req, res) => {
 
 app.post('/get-products', (req, res) => {
 
-    const { getImagesFromBucket } = require('./controller/product_upload_controller')
-
     let { id } = req.body;
     let docRef = id ? db.collection('products').doc(id) : db.collection('products');
 
@@ -296,8 +294,7 @@ app.post('/get-products', (req, res) => {
         }
         let productsArray = [];
         if(id){
-            // console.log(`id: ${id}`)
-            return res.json(products.data());
+            return res.status(200).json(products.data());
         } else{
             products.forEach(item => {
                 let data = item.data();
@@ -323,6 +320,79 @@ app.post('/get-product-images', async (req, res) => {
     // }
 
     res.status(200).json({status: 'Success', content: image_urls})
+})
+// UPDATES: Pencode 
+// GET CART VIEW 
+app.get('/cart', (req, res) => {
+    res.sendFile(path.join(staticPath, 'cart.html'));
+})
+// ADD TO CART 
+app.post('/add-to-cart', (req, res) => {
+    let cart_data_file = './data/json/cart-file.json';
+    const {email, product} = req.body
+    
+    fs.readFile(cart_data_file, (err, json_data) => {
+        if (err){
+            console.log(`Error: ${err}`);
+            // return res.status(400).json({status: 'Error', msg: err.message});
+            fs.open(cart_data_file, 'w+', (err, fd) => {
+                if (err){
+                    return res.status(400).json({status: 'Error', msg: err.message})
+                }
+            })
+        }
+        
+        json_data = json_data.toString('utf8');
+        console.log(json_data)
+        let parsed_data = {};
+        if (json_data){
+            parsed_data = JSON.parse(json_data);
+            if(parsed_data[email]){
+                parsed_data[email].push(product);
+            }else{
+                parsed_data[email] = [];
+                parsed_data[email].push(product)
+            }
+        }
+        else {
+            parsed_data[email] = [];
+            parsed_data[email].push(product)
+        }
+        fs.writeFile(cart_data_file, JSON.stringify(parsed_data, null, 2), (err) => {
+            if (err){ 
+                console.log(err);
+                return res.status(400).json({status: 'Error', msg: err.message})
+            }
+            res.status(200).json({status: 'Success', content: parsed_data[email]})
+        })
+    })
+})
+// COLLECT USER CART 
+app.post('/get-user-cart', async (req, res) => {
+    let cart_data_file = './data/json/cart-file.json';
+    const {email } = req.body
+    
+    fs.readFile(cart_data_file, (err, json_data) => {
+        if (err){
+            console.log(`Error: ${err}`);
+            return res.status(200).json({status: 'Error', content: []});
+        }
+        
+        json_data = json_data.toString('utf8');
+        let parsed_data = {};
+        if (json_data){
+            parsed_data = JSON.parse(json_data);
+            if(parsed_data[email]){
+                parsed_data = parsed_data[email];
+            }else{
+                parsed_data = [];
+            }
+        }
+        else {
+            parsed_data = []
+        }
+        res.status(200).json({status: 'Success', content: parsed_data})
+    })
 })
 
 app.post('/delete-product', (req, res) => {

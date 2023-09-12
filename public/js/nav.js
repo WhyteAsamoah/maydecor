@@ -17,7 +17,10 @@ const createNav = () => {
                         <button class="btn" id="user-btn">Logout</button>
                     </div>
                 </a>
-                <a href="#"><img src="assets/cart.png" alt=""></a>
+                <a href="/cart" id="cart-button">
+                    <img src="assets/cart.png" alt="">
+                    <span class="cart-badge">0</span>
+                </a>
             </div>
         </div>
         <ul class="links-container">
@@ -45,6 +48,19 @@ window.onload = () => {
     let user = JSON.parse(sessionStorage.user || null);
     if (user != null) {
         // user is logged in
+        
+        // UPDATES: Pencode
+        // GET CART FOR USER 
+        (async () => {
+            let {email} = user
+            let user_cart = await sendData('/get-user-cart', {email: email});
+            if (user_cart){
+                let cart = user_cart['content'];
+                let cart_badge = document.querySelector('.cart-badge');
+                cart_badge.innerHTML = cart.length
+            }
+        })();
+
         popuptext.innerHTML = `Logged in as ${user.name}`;
         actionBtn.innerHTML = 'Logout';
         actionBtn.addEventListener('click', () => {

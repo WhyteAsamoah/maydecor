@@ -1,3 +1,5 @@
+// UPDATES: Pencode 
+let productsInfo = [];
 // pop up modal when click on the product card
 let previewContainer = document.querySelector('.products-preview');
 
@@ -19,6 +21,36 @@ const createProductItem = (product) => {
             </div>
         </div>
     `
+}
+
+async function onBuyNow(product_id){
+    if (sessionStorage.user){
+        let {email} = JSON.parse(sessionStorage.user);
+        let product = productsInfo.find(pro => pro.id == product_id)
+        product = {
+            id: product.id,
+            name: product.name,
+            stock: product.stock,
+            sellPrice: product.sellPrice,
+            shortDes: product.shortDes,
+            img: product.img_0
+        }
+        if (email){
+            let data = {email: email, product: product}
+            let res = await sendData('/add-to-cart', data)
+            if (res){
+                let cart = res['content'];
+                let cart_badge = document.querySelector('.cart-badge');
+                cart_badge.innerHTML = cart.length
+            }
+        }else{
+            alert('Login to add to cart')
+            location.replace('/login');
+        }
+    }else {
+        alert('Login to add to cart')
+        location.replace('/login');
+    }
 }
 
 // UPDATE: Pencode 
@@ -50,7 +82,7 @@ const createProductPreview = (product) => {
             <p>${product.shortDes}</p>
             <div class="price">$${product.sellPrice}</div>
             <div class="buttons">
-                <a href="#" class="btn btn-outline-secondary btn-black text-uppercase buy">buy now</a>
+                <a href="#" class="btn btn-outline-secondary btn-black text-uppercase buy" onclick="onBuyNow('${product.id}')">buy now</a>
                 <a href="#" class="btn btn-outline-secondary btn-black text-uppercase enterAR">View in Room</a>
             </div>
         </div>
@@ -61,7 +93,7 @@ const createProductPreview = (product) => {
 // UPDATE: Pencode
 // GET PRODUCTS INFORMATION 
 (async function(){
-    let productsInfo = await getProductsInfo();
+    productsInfo = await getProductsInfo();
     // console.log(productsInfo)
     productsInfo.forEach(product => {
         createProductItem(product);
@@ -110,7 +142,6 @@ const createProductPreview = (product) => {
         }
     });
 })();
-
 
 
 

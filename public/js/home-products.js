@@ -40,3 +40,26 @@ const getProductsInfo = async() => {
     }
     return productsInfo.slice(0, 3);
 }
+
+// send data function
+const sendData = async (path, data) => {
+    try{
+        let res = await fetch(path, {
+            method: 'post',
+            headers: new Headers({'Content-Type': 'application/json'}),
+            body: JSON.stringify(data)
+        })
+
+        let response = await res.json()
+        
+        if (await res.status == 200){
+            return response
+        }
+        else {
+            return false
+        }
+    }
+    catch{
+        return false
+    }
+}
