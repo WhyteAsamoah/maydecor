@@ -60,7 +60,7 @@ applyFormButton.addEventListener('click', () => {
     }
 })
 
-const createCartProduct = (data) => {
+const createCartProduct = (data, count) => {
     // UPDATE: Pencode
     // SET IMAGE SOURCE 
     let img_source = data.img ?? "../assets/no image.png"
@@ -81,10 +81,11 @@ const createCartProduct = (data) => {
             </div>
             <div class="d-flex flex-row align-items-center">
                 <div style="width: 50px;">
-                <h5 class="fw-normal mb-0">2</h5>
+                    <h5 class="fw-normal mb-0">${count}</h5>
                 </div>
+                
                 <div style="width: 80px;">
-                <h5 class="mb-0">$${data.sellPrice}</h5>
+                <h4 class="mb-0">$${data.sellPrice}</h4>
                 </div>
                 <a href="#!" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
             </div>
@@ -101,10 +102,32 @@ const getUserCart = (email) => {
         if (cart){
             let data = cart['content'];
             if(data.length > 0){
-                data.forEach(product => {
-                    createCartProduct(product)
-                });
+                let totalAmount = data.reduce((tot, cur) => tot + Number(cur['sellPrice']), 0);
+                // console.log(totalAmount)
+                let grouped = groupBy(data, 'id');
+                Object.keys(grouped).forEach((key) => {
+                    let keyObject = grouped[key];
+                    let count = keyObject.length;
+                    // CREATE PRODUCT CART 
+                    createCartProduct(keyObject[0], count)
+                })
+                
+                // SET CART ITEMS COUNT 
+                let items_count_elem = document.querySelector('.cart-items-count');
+                items_count_elem.innerHTML = `Items: ${data.length} <br /> $${totalAmount}`
             }
         }
     })();
+}
+
+const groupBy = (arr, key) => {
+    let reduced = arr.reduce((tot, cur) => {
+        let gKey = cur[key];
+        if (!tot[gKey]){
+            tot[gKey] = [];
+        }
+        tot[gKey].push(cur);
+        return tot;
+    }, {});
+    return reduced;
 }

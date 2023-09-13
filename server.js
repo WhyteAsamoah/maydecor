@@ -237,7 +237,7 @@ app.post('/save-product-images', imgUpload.array('image_uploads'), async (req, r
     const { uploadImages } = require('./controller/product_upload_controller');
 
     const product = req.body.product
-    console.log(product)
+    // console.log(product)
 
     let imgFiles = req.files
 
@@ -343,7 +343,7 @@ app.post('/add-to-cart', (req, res) => {
         }
         
         json_data = json_data.toString('utf8');
-        console.log(json_data)
+        // console.log(json_data)
         let parsed_data = {};
         if (json_data){
             parsed_data = JSON.parse(json_data);
