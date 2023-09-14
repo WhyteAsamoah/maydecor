@@ -355,7 +355,8 @@ body {
 }
 
 
-.products-preview .preview .buttons a{
+.products-preview .preview .buttons a, 
+.products-preview .preview .buttons button {
   flex: 1 1 16rem;
   padding: 1rem 0;
   font-size: 1.8rem;

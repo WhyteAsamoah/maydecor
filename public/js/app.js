@@ -82,8 +82,15 @@ const createProductPreview = (product) => {
             <p>${product.shortDes}</p>
             <div class="price">$${product.sellPrice}</div>
             <div class="buttons">
+                
+                <button type="button" class="btn btn-outline-secondary btn-black text-uppercase buy" onclick="onBuyNow('${product.id}')">
+                buy now</button>
+                <button type="button" class="btn btn-outline-secondary btn-black text-uppercase enterAR">
+                View in Room</button>
+                <!--
                 <a href="#" class="btn btn-outline-secondary btn-black text-uppercase buy" onclick="onBuyNow('${product.id}')">buy now</a>
                 <a href="#" class="btn btn-outline-secondary btn-black text-uppercase enterAR">View in Room</a>
+                -->
             </div>
         </div>
         `;

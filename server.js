@@ -394,6 +394,39 @@ app.post('/get-user-cart', async (req, res) => {
         res.status(200).json({status: 'Success', content: parsed_data})
     })
 })
+// REMOVE CART ITEM
+app.post('/remove-cart-item', async (req, res) => {
+    let cart_data_file = './data/json/cart-file.json';
+    const { email, product_id } = req.body
+    
+    fs.readFile(cart_data_file, (err, json_data) => {
+        if (err){
+            console.log(`Error: ${err}`);
+            return res.status(200).json({status: 'Error', content: []});
+        }
+        
+        json_data = json_data.toString('utf8');
+        let parsed_data = {};
+        if (json_data){
+            parsed_data = JSON.parse(json_data);
+            if(parsed_data[email]){
+                let filtered = parsed_data[email].filter((item) => item.id != product_id);
+                parsed_data[email] = filtered;
+                fs.writeFile(cart_data_file, JSON.stringify(parsed_data, null, 2), (err) => {
+                    if (err){ 
+                        console.log(err);
+                        return res.status(400).json({status: 'Error', msg: err.message});
+                    }
+                    res.status(200).json({status: 'Success', content: parsed_data[email]});
+                });
+            }else {
+                res.status(200).json({status: 'no-action', msg: 'No action executed'});
+            }
+        }else {
+            res.status(200).json({status: 'no-action', msg: 'No action executed'});
+        }
+    })
+})
 
 app.post('/delete-product', (req, res) => {
     let { id } = req.body;

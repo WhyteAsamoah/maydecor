@@ -85,9 +85,9 @@ const createCartProduct = (data, count) => {
                 </div>
                 
                 <div style="width: 80px;">
-                <h4 class="mb-0">$${data.sellPrice}</h4>
+                <h4 class="mb-0">$${ count * Number(data.sellPrice)}</h4>
                 </div>
-                <a href="#!" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
+                <a href="#!" style="color: #cecece;" onclick="remoteCartItem('${data.id}')"><i class="fas fa-trash-alt fa-lg"></i></a>
             </div>
             </div>
         </div>
@@ -101,23 +101,40 @@ const getUserCart = (email) => {
         
         if (cart){
             let data = cart['content'];
-            if(data.length > 0){
-                let totalAmount = data.reduce((tot, cur) => tot + Number(cur['sellPrice']), 0);
-                // console.log(totalAmount)
-                let grouped = groupBy(data, 'id');
-                Object.keys(grouped).forEach((key) => {
-                    let keyObject = grouped[key];
-                    let count = keyObject.length;
-                    // CREATE PRODUCT CART 
-                    createCartProduct(keyObject[0], count)
-                })
-                
-                // SET CART ITEMS COUNT 
-                let items_count_elem = document.querySelector('.cart-items-count');
-                items_count_elem.innerHTML = `Items: ${data.length} <br /> $${totalAmount}`
-            }
+            setCartItems(data);
         }
     })();
+}
+
+const remoteCartItem = (product_id) => {
+    (async () => {
+        let confirmText = "You are about remove cart Item. \nPress OK to confirm!"
+        if (confirm(confirmText) == true){
+            let data = {email: user.email, product_id: product_id}
+            let resp = await sendData('/remove-cart-item', data);
+            let cartData = resp['content'];
+            // CLEAR CART CONTENT 
+            document.querySelector('.cart-container').innerHTML = '';
+            setCartItems(cartData);
+        }
+    })();
+    
+}
+
+const setCartItems = (data = []) => {
+    if(data.length > 0){
+        let totalAmount = data.reduce((tot, cur) => tot + Number(cur['sellPrice']), 0);
+        let grouped = groupBy(data, 'id');
+        Object.keys(grouped).forEach((key) => {
+            let keyObject = grouped[key];
+            let count = keyObject.length;
+            // CREATE PRODUCT CART 
+            createCartProduct(keyObject[0], count)
+        });
+        // SET CART ITEMS COUNT 
+        let items_count_elem = document.querySelector('.cart-items-count');
+        items_count_elem.innerHTML = `Items: ${data.length} <br /> $${totalAmount}`
+    }
 }
 
 const groupBy = (arr, key) => {
