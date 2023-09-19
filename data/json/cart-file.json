@@ -66,6 +66,26 @@
       "stock": "20",
       "sellPrice": "900",
       "shortDes": "some description"
+    },
+    {
+      "id": "duvet splash sheet-4944",
+      "name": "Duvet Splash sheet",
+      "stock": "10",
+      "sellPrice": "47.5",
+      "shortDes": "Duvet Splash sheet",
+      "img": [
+        "https://storage.googleapis.com/maydecor-89f84.appspot.com/duvet_splash_sheet-4944-00.webp?GoogleAccessId=firebase-adminsdk-bjvyw%40maydecor-89f84.iam.gserviceaccount.com&Expires=16730319600&Signature=W8iKNptKjAkJI3agPBqVBjPCSkrCKDKoi9xMdQX889a1LqKwkkE5NKKrYR7I21HHb%2FnSPq0HmIt%2FMAgBIr%2BB6wdSJAbuC7X54dBeK1jDnoxRs5IIyo9yJF8wMzNK62EpkrBYkickpgHWNqOd0sSIuK4wXoRdL525Gh4oIU%2BP4KLy06RrFUdXaZTuTUr%2F%2F2S5bjmCYjt9t65osZI20MjhofHi7EVlpOaduF7uaIykAfPT5rBYzHxY%2BixJDHi6TpBb6mCQbNboSEYuPB4R7nBB3w4JlSra6buMoDvO3XozswePlEX2yse%2Bpau%2FWbAbBphI0zC4XByv6%2FHSJrizcZ83XA%3D%3D"
+      ]
+    },
+    {
+      "id": "creative custom designer-4774",
+      "name": "Creative Custom Designer",
+      "stock": "29",
+      "sellPrice": "24.75",
+      "shortDes": "Creative Custom Designer",
+      "img": [
+        "https://storage.googleapis.com/maydecor-89f84.appspot.com/creative_custom_designer-4774-00.jpeg?GoogleAccessId=firebase-adminsdk-bjvyw%40maydecor-89f84.iam.gserviceaccount.com&Expires=16730319600&Signature=CMDbKucqEEkfnZ5hEWFULZ%2FFyMDcL5QZQr1FTu2ei9rcr5m8t5e3yyw6uEjIwh1o8hlIEpHWepldDZR7Kpy%2BEutdvkZgk6Nu2BJRtFtd5F3z6koAPINpeyuUeKOQwd5MEsYLSCmGdKWfg1PBi%2BhkjQT6cGQLxXOfbrU7aC3XZA6%2Bi7Nq13qJO44kh4QGwhfeXQbd%2FZVgMkilXusL%2BxPaQTJp%2BKzJyJRj4b2h9Z1rikhpnklgOVEIjD2Zc8VBXfjxuuStmHoJ944q4%2FmqZk5AGOe4%2F1ygT%2BP7wLDzeVjUuij6iTdmAp2mlbDjLz8oh6AFGZWabH%2FCzM1uhrU4SrB1DQ%3D%3D"
+      ]
     }
   ]
 }

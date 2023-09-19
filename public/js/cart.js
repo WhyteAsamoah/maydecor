@@ -133,7 +133,9 @@ const setCartItems = (data = []) => {
         });
         // SET CART ITEMS COUNT 
         let items_count_elem = document.querySelector('.cart-items-count');
-        items_count_elem.innerHTML = `Items: ${data.length} <br /> $${totalAmount}`
+        let total_amountDoc = document.querySelector('.cart-total-amount')
+        items_count_elem.innerHTML = `Items: ${data.length} <br />`
+        total_amountDoc.innerHTML = `$${totalAmount}`
     }
 }
 

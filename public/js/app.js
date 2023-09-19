@@ -65,7 +65,7 @@ const createProductPreview = (product) => {
             <i class="fas fa-times"></i>
             <div class="img-container">
                 <img src="${img_source}" class="store-img" alt="">
-                <span class="store-item-icon">
+                <span class="store-item-icon" onclick="onBuyNow('${product.id}')" data-mdb-toggle="tooltip" title="Add to cart">
                 <i class="fas fa-shopping-cart"></i>
                 </span>
             </div>
@@ -83,7 +83,7 @@ const createProductPreview = (product) => {
             <div class="price">$${product.sellPrice}</div>
             <div class="buttons">
                 
-                <button type="button" class="btn btn-outline-secondary btn-black text-uppercase buy" onclick="onBuyNow('${product.id}')">
+                <button type="button" class="btn btn-outline-secondary btn-black text-uppercase buy" >
                 buy now</button>
                 <button type="button" class="btn btn-outline-secondary btn-black text-uppercase enterAR">
                 View in Room</button>
