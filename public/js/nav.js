@@ -79,3 +79,22 @@ window.onload = () => {
         })
     }
 }
+
+// nav toggle
+let links = document.querySelectorAll('.links-container');
+
+links.forEach(link => {
+    link.addEventListener('click', () => {
+        links.forEach(item => item.classList.remove('active'));
+        link.classList.add('active');
+    })
+})
+
+// toggle btn
+const toggleBtn = document.querySelector('.toggle-btn');
+const ul = document.querySelector('.links-container');
+
+toggleBtn.addEventListener('click', () => {
+    ul.classList.toggle('show');
+    toggleBtn.classList.toggle('active');
+});
