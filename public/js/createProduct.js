@@ -19,9 +19,9 @@ const createProduct = (data) => {
     // SET IMAGE SOURCE 
     let img_source = data.img_0 ?? "../assets/no image.png"
 
-    let productContainer = document.querySelector('.product-container');
+    let productContainer = document.querySelector('.products-container');
     productContainer.innerHTML += `
-    <div class="product-card col-md-6 col-lg-6">
+    <div class="product-card">
         <div class="product-image">
             ${data.draft ? `<span class="tag">Draft</span>` : ''}
             <img src="${img_source}"  class="product-thumb" alt="">

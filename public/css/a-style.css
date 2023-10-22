@@ -10,14 +10,14 @@
     display: none;
 }
 
-.product-card{
+/* .product-card{
     flex: 0 0 auto;
     width: 250px;
     height: 450px;
     margin-right: 40px;
     padding-right: 0;
     padding-left: 0;
-}
+} */
 
 .product-image{
     position: relative;
