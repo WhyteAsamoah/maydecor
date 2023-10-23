@@ -1,6 +1,6 @@
 body{
     display: block;
-    padding: 0 10vw;
+    padding: 5vw;
 }
 
 .logo{
@@ -23,11 +23,11 @@ textarea{
 }
 
 .product-info{
-    display: grid;
-    grid-template-columns: .75fr 1fr;
-    grid-template-rows: repeat(2, 1fr);
+    /* display: grid;
+    grid-template-columns: .75fr 1fr; */
+    /* grid-template-rows: repeat(2, 1fr); */
     /* grid-gap: 20px; */
-    gap:2rem;
+    /* gap:2rem; */
     margin-bottom: 20px;
 }
 
@@ -57,7 +57,8 @@ textarea{
 .upload-image-sec, .select-sizes{
     background: #fff;
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
+    overflow-x: auto;
 }
 
 .text img{
@@ -129,7 +130,8 @@ input::-webkit-inner-spin-button {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     /* grid-gap: 20px; */
-    gap: 20px;
+    width: 100%;
+    gap: 10px;
 }
 
 .product-price input{
