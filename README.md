@@ -1,4 +1,4 @@
-### Final Year Project: Augmented Reality: An online interior items shopping web app
+### Augmented Reality: An online interior items shopping web app
 
 <a name="top"></a>
 
