@@ -99,8 +99,13 @@ const getImagesFromBucket = async(product) => {
     return image_urls;
 }
 
+const uploadModel = async(product) => {
+
+  return;
+}
 
 module.exports = {
     uploadImages,
+    uploadModel,
     getImagesFromBucket
 }

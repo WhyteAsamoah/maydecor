@@ -11,6 +11,7 @@
   "dependencies": {
     "@google-cloud/storage": "^6.11.0",
     "bcrypt": "^5.1.0",
+    "ejs": "^3.1.9",
     "express.js": "^1.0.0",
     "firebase-admin": "^11.8.0",
     "firebase-functions": "^4.4.1",

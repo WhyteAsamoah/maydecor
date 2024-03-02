@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- bootstrap -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
     <!-- signup css -->
-    <link rel="stylesheet" href="css/signup.css">
+    <link rel="stylesheet" href="../css/signup.css">
     <!-- seller css -->
-    <link rel="stylesheet" href="css/add-product.css">
+    <link rel="stylesheet" href="../css/add-product.css">
     <title>MayDecor : Add Product(s)</title>
 </head>
 
@@ -74,7 +74,32 @@
                 </div>
             </div>
         </div>
+        
+        <div class="product-info row">
+            <div class="col-lg-6 col-sm-12 m-0">
+                <div class="upload-image-sec">
+                    <!-- upload inputs -->
+                    <p class="text"><img src="../assets/camera.png" alt="">upload image</p>
+                    <div class="upload-catalouge">
+                        <!-- first file upload -->
+                        <input type="file" class="fileupload product-model-upload" id="first-model-upload-btn" accept=".obj, .stl, .dae, .fbx, .glb" hidden>
+                        <label for="first-model-upload-btn" class="upload-image"></label>
 
+                        <!-- second file upload -->
+                        <input type="file" class="fileupload product-model-upload" id="second-model-upload-btn" accept=".obj, .stl, .dae, .fbx, .glb" hidden>
+                        <label for="second-model-upload-btn" class="upload-image"></label>
+
+                        <!-- third file upload -->
+                        <input type="file" class="fileupload product-model-upload" id="third-model-upload-btn" accept=".obj, .stl, .dae, .fbx, .glb" hidden>
+                        <label for="third-model-upload-btn" class="upload-image"></label>
+
+                        <!-- fourth file upload -->
+                        <input type="file" class="fileupload product-model-upload" id="fourth-model-upload-btn" accept=".obj, .stl, .dae, .fbx, .glb" hidden>
+                        <label for="fourth-model-upload-btn" class="upload-image"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="product-price col-12">
                 <input type="number" id="actual-price" placeholder="actual price">
@@ -100,9 +125,9 @@
     </form>
 
     <!-- jquery -->
-    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
     <!-- bootstrap js -->
-    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
     <script src="../js/token.js"></script>
     <script src="../js/add-product.js"></script>
 

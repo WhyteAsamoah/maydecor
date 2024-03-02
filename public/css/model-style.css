@@ -1,0 +1,319 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: Monospace;
+  font-size: 13px;
+  line-height: 24px;
+  overscroll-behavior: none;
+}
+
+a {
+  color: #ffff00;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+#info {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  z-index: 1; /* TODO Solve this in HTML */
+}
+
+a,
+button,
+input,
+select {
+  pointer-events: auto;
+}
+
+.lil-gui {
+  z-index: 2 !important; /* TODO Solve this in HTML */
+}
+
+@media all and (max-width: 640px) {
+  .lil-gui.root {
+    right: auto;
+    top: auto;
+    max-height: 50%;
+    max-width: 80%;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+#overlay {
+  position: absolute;
+  font-size: 16px;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+#overlay button {
+  background: transparent;
+  border: 0;
+  border: 1px solid rgb(255, 255, 255);
+  border-radius: 4px;
+  color: #ffffff;
+  padding: 12px 18px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+#notSupported {
+  width: 50%;
+  margin: auto;
+  background-color: #ff0000;
+  margin-top: 20px;
+  padding: 10px;
+}
+
+/* MODEL VIEWER SECTION */
+:not(:defined) > * {
+  display: none;
+}
+
+model-viewer {
+  background-color: #eeeeee;
+  overflow-x: hidden;
+  width: 100vw;
+  height: 100%;
+  min-height: 100%;
+}
+
+.ar-btn {
+  /*   background-color: white;  */
+  border-radius: 4px;
+  border: none;
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  padding: 12px;
+  transform: translate(-50%, -50%);
+  /*   GLASSY FEEL */
+  background: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+#ar-button {
+  background-image: url(../../assets/ic_view_in_ar_new_googblue_48dp.png);
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  background-position: 12px 50%;
+  background-color: #ffffff;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  bottom: 132px;
+  padding: 0px 16px 0px 40px;
+  font-family: Roboto Regular, Helvetica Neue, sans-serif;
+  font-size: 14px;
+  color: #4285f4;
+  height: 36px;
+  line-height: 36px;
+  border-radius: 18px;
+  border: 1px solid #dadce0;
+}
+
+.placement-switch-container {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  z-index: 999; /* Adjust as needed to make sure it appears above other elements */
+  border: 1px solid rgb(255, 255, 255);
+  /*   background: rgba(0, 0, 0, 0.1); */
+  padding: 10px;
+  border-radius: 5px;
+  /*   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); */
+}
+
+.placement-switch-container input {
+  font: 15px sans-serif;
+  text-align: center;
+  font-weight: bold;
+}
+
+#ar-button:active {
+  background-color: #e8eaed;
+}
+
+#ar-button:focus {
+  outline: none;
+}
+
+#ar-button:focus-visible {
+  outline: 1px solid #4285f4;
+}
+
+@keyframes circle {
+  from {
+    transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg);
+  }
+  to {
+    transform: translateX(-50%) rotate(360deg) translateX(50px) rotate(-360deg);
+  }
+}
+
+@keyframes elongate {
+  from {
+    transform: translateX(100px);
+  }
+  to {
+    transform: translateX(-100px);
+  }
+}
+
+model-viewer > #ar-prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 175px;
+  animation: elongate 2s infinite ease-in-out alternate;
+  display: none;
+  width: 100%;
+}
+
+model-viewer[ar-status="session-started"] > #ar-prompt {
+  display: block;
+}
+
+model-viewer > #ar-prompt > img {
+  animation: circle 4s linear infinite;
+}
+
+model-viewer > #ar-failure {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 175px;
+  display: none;
+}
+
+model-viewer[ar-tracking="not-tracking"] > #ar-failure {
+  display: block;
+}
+
+.slider {
+  width: 90%;
+  text-align: center;
+  overflow: hidden;
+  position: absolute;
+  bottom: 30px;
+  /*   padding: 5px 10px; */
+  border-radius: 5px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.slides {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.slide {
+  /*   scroll-snap-align: start; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  /*   background-color: #fff; */
+  margin: 5px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid rgb(255, 255, 255);
+  /*   border: none; */
+  display: flex;
+}
+
+.slide.selected {
+  box-shadow: 0 0 5px rgba(255, 149, 5, 0.3);
+}
+
+.slide:focus {
+  outline: none;
+}
+
+.slide:focus-visible {
+  outline: 1px solid #4285f4;
+}
+
+.slide:hover {
+  box-shadow: 0 0 5px rgba(255, 149, 5, 0.3);
+}
+
+.slides .slide:first-child {
+  margin-left: auto;
+}
+
+.slides .slide:last-child {
+  margin-right: auto;
+}
+
+#error {
+  background-color: #ffffffdd;
+  border-radius: 16px;
+  padding: 16px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  transition: opacity 0.3s;
+}
+#error.hide {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 2s, opacity 1s 1s;
+}
+
+#button1 {
+  background-image: url('https://cdn.glitch.global/5fbfc2de-2cc0-47b2-b779-9482469baf9f/sofa-bg3.jpg?v=1702549627612');
+}
+#button2 {
+  background-image: url('https://cdn.glitch.global/5fbfc2de-2cc0-47b2-b779-9482469baf9f/sofa-bg2.jpg?v=1702549622575');
+}
+#button3 {
+  background-image: url('https://cdn.glitch.global/5fbfc2de-2cc0-47b2-b779-9482469baf9f/sofa-bg4.jpg?v=1702549635326');
+}
+#button4 {
+  background-image: url('https://cdn.glitch.global/5fbfc2de-2cc0-47b2-b779-9482469baf9f/sofa-bg5.jpg?v=1702549643232');
+}

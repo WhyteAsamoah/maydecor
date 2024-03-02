@@ -441,9 +441,10 @@ body {
     font-size: 55%;
  }
 
-  .hero-section{
-    height: calc(80vh - 120px);
-    background-size: contain;
+ .hero-section{
+    height: calc(50vh - 90px);
+    background-size: cover;
+    justify-content: center;
     text-align: center;
     align-items: center;
   }

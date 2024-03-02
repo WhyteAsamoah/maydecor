@@ -125,7 +125,11 @@ addProductBtn.addEventListener('click', async () => {
         console.log(sendRespone)
         if (sendRespone){
             let product_id = sendRespone['product_id']
-            save_product_images(product_id)
+            await save_product_images(product_id);
+            await save_product_models(product_id);
+        }
+        {
+            await processData(sendRespone);
         }
     }
 })
@@ -252,13 +256,11 @@ function object_to_formdata(obj){
 }
 // SAVE IMAGES 
 async function save_product_images(product_id=''){
-    
     product_id = product_id.replaceAll(/ /g , '_')
     // GET ALL IMAGE HTML DOCS BY CLASS NAME 
     let imagesDocs = document.getElementsByClassName('product-image-upload')
     // FORMDATA OBJECT
     let imageFilesData = new FormData();
-    // console.log(imagesDocs.length)
     imageFilesData.append('product', product_id)
     // LOOP LIST OF IMAGE DOCUMENTS 
     for (var i = 0; i < imagesDocs.length; i++){
@@ -279,13 +281,39 @@ async function save_product_images(product_id=''){
     // SEND FORMDATA TO BACKEND SERVER
     if (imageFilesData.has('image_uploads')){
         // console.log(imageFilesData.has('image_uploads'))
-        sendFormData('/save-product-images', imageFilesData);
+        await sendFormData('/save-product-images', imageFilesData);
+    }
+}
+
+async function save_product_models(product_id=''){
+    // product_id = product_id.replaceAll(/ /g , '_')
+    // GET ALL IMAGE HTML DOCS BY CLASS NAME 
+    let modelDocs = document.getElementsByClassName('product-model-upload');
+    let modelFilesData = new FormData();
+    modelFilesData.append('product', product_id)
+    // LOOP LIST OF Model DOCUMENTS 
+    for (var i = 0; i < modelDocs.length; i++){
+        let model = modelDocs[i].files[0]
+        if (model !== undefined){
+            let filename = model.name;
+            let name_secs = filename.split('.');
+            let ext = name_secs[name_secs.length - 1];
+            let model_name = product_id.replaceAll(/ /g , '_') + `-0${i}`;
+            // CHANGE THE FILE NAME WITH APPENDED INDEX
+            let newFile = new File([model], `${model_name}.${ext}`, { type: model.type});
+            // APPEND UPLOADED IMAGE FILES TO FORMDATA OBJECT
+            modelFilesData.append('model_uploads', newFile);
+        }
     }
     
+    // SEND FORMDATA TO BACKEND SERVER
+    if (modelFilesData.has('model_uploads')){
+        await sendFormData('/save-product-models', modelFilesData);
+    }
 }
 
 // IMAGE INPUTS CLICK 
-const imageInputs = document.querySelectorAll('input[type=file]');
+const imageInputs = document.querySelectorAll('input.product-image-upload');
 imageInputs.forEach(input => {
     input.addEventListener("change", function(){
         console.log('....changed.....')
@@ -302,5 +330,15 @@ imageInputs.forEach(input => {
     })
     
     // label.style.backgroundImage = 'url(../assets/LogoMakr.png)';
+});
+// MODEL INPUT SELECT 
+const modelInputs = document.querySelectorAll('input.product-model-upload');
+modelInputs.forEach(input => {
+    input.addEventListener("change", function(){
+        let inputFile = input.files[0];
+        if (inputFile){
+            input.labels[0].textContent = inputFile.name;
+        }
+    });
 });
 // --------------------------------------------------

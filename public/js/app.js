@@ -53,6 +53,9 @@ async function onBuyNow(product_id){
     }
 }
 
+async function onViewRoom(product_id){
+    alert(product_id)
+}
 // UPDATE: Pencode 
 // POP UP PREVIEW FOR PRODUCT INFO 
 const createProductPreview = (product) => {
@@ -85,11 +88,11 @@ const createProductPreview = (product) => {
                 
                 <button type="button" class="btn btn-outline-secondary btn-black text-uppercase buy" >
                 buy now</button>
-                <button type="button" class="btn btn-outline-secondary btn-black text-uppercase enterAR">
+                <button type="button" class="btn btn-outline-secondary btn-black text-uppercase enterAR" onclick="onViewRoom('${product.id}')">
                 View in Room</button>
                 <!--
                 <a href="#" class="btn btn-outline-secondary btn-black text-uppercase buy" onclick="onBuyNow('${product.id}')">buy now</a>
-                <a href="#" class="btn btn-outline-secondary btn-black text-uppercase enterAR">View in Room</a>
+                <a href="#" class="btn btn-outline-secondary btn-black text-uppercase enterAR" onclick="onViewRoom('${product.id}')">View in Room</a>
                 -->
             </div>
         </div>

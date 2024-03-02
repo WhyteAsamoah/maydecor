@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Maydecor AR Testing</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <link type="text/css" rel="stylesheet" href="css/model-style.css" />
+    <style>
+      a {
+        color: #f00;
+      }
+    </style>
+    <script
+      type="module"
+      src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"
+    ></script>
+  </head>
+  <body>
+    <model-viewer
+      camera-controls
+      shadow-intensity="1"
+      touch-action="pan-y"
+      id="model-viewer"
+      ar
+      ar-modes="scene-viewer webxr quick-look"
+      ar-placement="floor"
+    >
+      <div id="error" class="hide">AR is not supported on this device</div>
+      <div class="placement-switch-container">
+        <h3 style="color: #777; font-weight: 400">Placement</h3>
+        <input
+          type="radio"
+          id="floor"
+          name="placement_radio"
+          value="floor"
+          checked="checked"
+          onclick="onSwitchPlacement(this);"
+        />
+          <label for="floor" style="color: #777777">Floor</label><br />
+
+        <input
+          type="radio"
+          id="wall"
+          name="placement_radio"
+          value="wall"
+          onclick="onSwitchPlacement(this);"
+        />
+          <label for="wall" style="color: #777777">Wall</label><br />
+      </div>
+      <button slot="ar-button" class="ar-btn">VEIW IN ROOM</button>
+
+      <div class="slider">
+        <!--         <h3 style="color: #777; font-weight: 400; margin: 0;">Select Material</h3> -->
+        <div class="slides">
+          <button
+            id="button1"
+            class="slide selected"
+            onclick="changeMaterial(this, '1')"
+          ></button
+          ><button
+            id="button2"
+            class="slide"
+            onclick="changeMaterial(this, '2')"
+          ></button
+          ><button
+            id="button3"
+            class="slide"
+            onclick="changeMaterial(this, '3')"
+          ></button
+          ><button
+            id="button4"
+            class="slide"
+            onclick="changeMaterial(this, '4')"
+          ></button>
+        </div>
+      </div>
+    </model-viewer>
+
+    <script src="js/model-viewer.js"></script>
+  </body>
+</html>

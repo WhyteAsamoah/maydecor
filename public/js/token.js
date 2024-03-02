@@ -35,28 +35,20 @@ const sendData = async (path, data) => {
         })
 
         let response = await res.json()
-        processData(response);
+        // processData(response);
         if (await res.status == 200){
             return response
         }
         else {
             return false
         }
-        // fetch(path, {
-        //     method: 'post',
-        //     headers: new Headers({'Content-Type': 'application/json'}),
-        //     body: JSON.stringify(data)
-        // }).then((res) => res.json())
-        // .then(response => {
-        //     processData(response);
-        // })
     }
     catch{
         return false
     }
 }
 
-const processData = (data) => {
+const processData = async (data) => {
     loader.style.display = null;
     if (data.alert) {
         showAlert(data.alert);
@@ -93,18 +85,22 @@ const showAlert = (msg) => {
 // UPDATES: Pencode
 // Send FormData -------------------------
 const sendFormData = async (path, formData) => {
-    fetch(path, {
-        method: 'post',
-        // headers: { "Content-Type": "multipart/form-data" },
-        body: formData
-    })
-    .then((res) => res.json())
-    .then(json => {
-        console.log(json)
-    })
-    .catch(ex => {
+    try{
+        const options = { method: 'post', body: formData };
+        const resp = await fetch(path, options);
+        // alert(await resp.text())
+        if (resp.ok){
+            const jResp = await resp.json()
+            // alert(JSON.stringify(jResp));
+            showAlert(JSON.stringify(jResp))
+        }else{
+            let rText = res.text();
+            throw new Error(rText);
+        }
+    }catch (ex){
+        showAlert(`Err: ${ex}`)
         console.log(ex)
-    })
+    }
 }
 
 // UPDATES: Pencode

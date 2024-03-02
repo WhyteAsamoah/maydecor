@@ -18,11 +18,18 @@ const imgUpload = multer({ memostore });
 let staticPath = path.join(__dirname, 'public');
 // initializing express.js
 const app = express();
+
+
 //middlewares
+// ENGINE
+app.set('view engine', 'ejs');
+
 app.use(cors());
 app.use(express.static(staticPath));
 app.use(express.json({limit: '50mb', extended: true})); // parse json data
 app.use(express.urlencoded({limit: '50mb', extended: false})); // parse urlencoded data
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/model-assets', express.static('public/assets/models'));
 
 // const corsOptions = {
 //     origin: 'http://localhost:3000', 'https://maydecor-89f84.web.app': 'https://maydecor-89f84.firebaseapp.com',
@@ -38,6 +45,7 @@ var admin = require('firebase-admin');
 var serviceAccount = require("./maydecor-89f84-firebase-adminsdk-bjvyw-9cf8daa04f.json");
 const { bucket } = require('firebase-functions/v1/storage');
 const { getStorage } = require('firebase-admin/storage');
+const exp = require('constants');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -176,6 +184,68 @@ app.get('/add-product/:id', (req, res) => {
     res.sendFile(path.join(staticPath, "add-product.html"));
 })
 
+// AR MODEL VIEWER 
+app.get('/ar-model-viewer/:id', (req, res) => {
+    
+    let { id } = req.params;
+    let docRef = db.collection('products').doc(id);
+
+    docRef.get()
+    .then(products => {
+        if(products.empty){
+            return res.json('No products found');
+        }
+        if(id && products.data()){
+            let data = products.data();
+            // res.render('ar/index', { })
+            // return res.json(products.data());
+            const modelPath = `./public/assets/models/${id}`;
+            if (fs.existsSync(modelPath)){
+                fs.readdir(modelPath, (err, files) => {
+                    if (err) {
+                        console.error('Error reading directory:', err);
+                        return res.status(500).send('Error reading directory.');
+                    }
+                    // Construct URLs for each file
+                    const fileUrls = files.map(file => {
+                        return `${req.protocol}://${req.get('host')}/model-assets/${id}/${file}`;
+                    });
+                    // Send the file URLs as a response
+                    res.render('ar/index', { models: fileUrls })
+                });
+            }
+            else{
+                console.log('No models exists');
+
+            }
+        } else{
+            
+        }
+    })
+})
+
+app.post('/ar-models-loader', (req, res) => {
+    let { id } = req.body;
+
+    const modelPath = `./public/assets/models/${id}`;
+    if (!fs.existsSync(modelPath)){
+        fs.readdir(modelPath, (err, files) => {
+            if (err) {
+                console.error('Error reading directory:', err);
+                return res.status(500).send('Error reading directory.');
+            }
+    
+            // Construct URLs for each file
+            const fileUrls = files.map(file => {
+                return `${req.protocol}://${req.get('host')}/files/${file}`;
+            });
+            console.log(fileUrls)
+            // Send the file URLs as a response
+            res.json(fileUrls);
+        });
+    }
+})
+
 // image upload route
 
 // add product to database
@@ -240,10 +310,25 @@ app.post('/save-product-images', imgUpload.array('image_uploads'), async (req, r
     // console.log(product)
 
     let imgFiles = req.files
-
+    
     if (!imgFiles || imgFiles.length < 1){
         return res.status(400).json({status: 'Error', msg: 'No files available'})
     }
+
+    const modelPath = `./public/assets/models/${product}`;
+    if (!fs.existsSync(modelPath)){
+        fs.mkdirSync(modelPath, { recursive: true });
+    }
+    imgFiles.map(model_file => {
+        const file_to_save = `${modelPath}/${model_file.originalname}`;
+        fs.writeFile(file_to_save, model_file.buffer, (err) => {
+            if (err) {
+                return res.status(500).send('Error saving file.');
+            }
+            // File saved successfully
+            res.send('File uploaded and saved successfully.');
+        });
+    });
     // UPLOAD IMAGES 
     let uploadRes = await uploadImages(imgFiles, product)
     // console.log(uploadRes)
@@ -254,6 +339,42 @@ app.post('/save-product-images', imgUpload.array('image_uploads'), async (req, r
     //     res.status(400).json(uploadRes)
     // }
     // res.json({response: 'files here'})
+})
+
+// UPDATES: Pencoder
+// SAVE PRODUCT IMAGE 
+app.post('/save-product-models', imgUpload.array('model_uploads'), async (req, res) => {
+    //
+    const product = req.body.product
+    let modelFiles = req.files;
+    //
+    if (!modelFiles || modelFiles.length < 1){
+        return res.status(400).json({status: 'Error', msg: 'No files available'});
+    }
+    // UPLOAD IMAGES 
+    const modelPath = `./public/assets/models/${product}`;
+    if (!fs.existsSync(modelPath)){
+        fs.mkdirSync(modelPath, { recursive: true });
+    }
+    //
+    const errors = [];
+    //
+    modelFiles.map((model_file, index) => {
+        const file_to_save = `${modelPath}/${model_file.originalname}`;
+        console.log(file_to_save)
+        fs.writeFile(file_to_save, model_file.buffer, (err) => {
+            if (err) {
+                console.log('Error: ', err)
+                errors.push(index);
+            }
+        });
+    });
+    //
+    if (errors.length > 0){
+        return res.status(500).send(`Error saving file(s) [${errors}]`);
+    }else {
+        res.status(200).send('File uploaded and saved successfully.');
+    }
 })
 
 // get products
@@ -269,7 +390,6 @@ app.post('/get-seller-products', (req, res) => {
         }
         let productsArray = [];
         if(id){
-            // console.log(`id: ${id}`)
             return res.json(products.data());
         } else{
             products.forEach(item => {
@@ -322,6 +442,7 @@ app.post('/get-product-images', async (req, res) => {
     res.status(200).json({status: 'Success', content: image_urls})
 })
 // UPDATES: Pencode 
+// CART 
 // GET CART VIEW 
 app.get('/cart', (req, res) => {
     res.sendFile(path.join(staticPath, 'cart.html'));
@@ -426,6 +547,11 @@ app.post('/remove-cart-item', async (req, res) => {
             res.status(200).json({status: 'no-action', msg: 'No action executed'});
         }
     })
+})
+
+// CHECKOUT 
+app.get('/checkout', (req, res) => {
+    res.sendFile(path.join(staticPath, 'checkout.html'));
 })
 
 app.post('/delete-product', (req, res) => {
