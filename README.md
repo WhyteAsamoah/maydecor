@@ -2,7 +2,8 @@
 
 <a name="top"></a>
 
-This AR web app has the potential to revolutionize the way people shop for interior décor. By allowing potential buyers to visualize objects in their home while shopping online. The one thing that this project ultimately has to accomplish well is to enable people to see how the item they intend to buy will look in their homes via the camera on their phone while hanging around at home or at work. It can help them make more informed decisions about their purchases.
+This AR web app has the potential to revolutionize the way people shop for interior décor. By allowing potential buyers to visualize objects in their home while shopping online. The one thing that this project ultimately has to accomplish well is to enable people to see how the item they intend to buy will look in their homes via the camera on their phone while hanging around at home or at work. It can help them make more informed decisions about their purchases. 
+AR testing [url](https://maydecor-ar-placement-testing.glitch.me/)
 
 ### Table of Contents
 1. [Installation](#installation)
@@ -76,7 +77,7 @@ Feel free to open an issue or submit a pull request.
 
 The License under which the project is distributed will be specified later.
 
-### 6. Author
+### 6. Authors
 
 <a name="author"></a>
 
@@ -84,6 +85,11 @@ Martha Asamoah Yeboah -
 [@WhyteAsamoah](https://github.com/WhyteAsamoah)
 
 abenaasamoah138@gmail.com
+
+Japhet Kofi Appau Arthur -
+[@PenCoder](https://github.com/penCoder)
+
+jajaclus3@gmail.com
 
 ### 7. Acknowledgements
 
